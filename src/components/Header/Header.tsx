@@ -1,10 +1,11 @@
+import styles from './Header.module.scss';
 import { Link } from 'react-router-dom';
 
 const Header = () => {
   const token = false;
 
   return (
-    <header>
+    <header className={styles.header}>
       <h2>header</h2>
       <div>
         <Link to="edit-profile">edit profile</Link>
