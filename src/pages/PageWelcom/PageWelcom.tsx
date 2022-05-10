@@ -4,8 +4,12 @@ const PageWelcom = () => {
   return (
     <div>
       <h2> welcom page</h2>
-      <Link to="authorization">log in</Link>
-      <Link to="authorization">sign up</Link>
+      <Link to="authorization" style={{ border: `1px solid green`, padding: 10 }}>
+        log in
+      </Link>
+      <Link to="registration" style={{ border: `1px solid green`, padding: 10 }}>
+        sign up
+      </Link>
     </div>
   );
 };
