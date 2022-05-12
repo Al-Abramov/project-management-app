@@ -1,12 +1,12 @@
 import axios from 'axios';
-import { AccountIntrface } from '../authorization/interface.account';
 import baseURL from '../baseURL';
 import { constURL } from '../enum.services';
 import { ErrorResponse } from '../types.services';
+import { BoardInterface } from './interfaces/BoardInterface';
 
-export async function getAllUsers(token: string) {
+export async function getAllBoards(token: string) {
   try {
-    const response = await axios.get(baseURL + constURL.USERS, {
+    const response = await axios.get(baseURL + constURL.BOARDS, {
       headers: {
         Authorization: token,
       },
@@ -21,9 +21,26 @@ export async function getAllUsers(token: string) {
   }
 }
 
-export async function getUserById(id: string, token: string) {
+export async function createBoard(obj: BoardInterface, token: string) {
   try {
-    const response = await axios.get(baseURL + constURL.USERS + `/${id}`, {
+    const response = await axios.post(baseURL + constURL.BOARDS, obj, {
+      headers: {
+        Authorization: token,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      throw error.response.statusText;
+    }
+    throw error;
+  }
+}
+
+export async function getBoardById(id: string, token: string) {
+  try {
+    const response = await axios.get(baseURL + constURL.BOARDS + `/${id}`, {
       headers: {
         Authorization: token,
       },
@@ -38,9 +55,9 @@ export async function getUserById(id: string, token: string) {
   }
 }
 
-export async function deleteUser(id: string, token: string) {
+export async function deleteBoard(id: string, token: string) {
   try {
-    const response = await axios.delete(baseURL + constURL.USERS + `/${id}`, {
+    const response = await axios.delete(baseURL + constURL.BOARDS + `/${id}`, {
       headers: {
         Authorization: token,
       },
@@ -55,9 +72,9 @@ export async function deleteUser(id: string, token: string) {
   }
 }
 
-export async function updateUser(id: string, token: string, obj: AccountIntrface) {
+export async function updateBoard(id: string, token: string, obj: BoardInterface) {
   try {
-    const response = await axios.put(baseURL + constURL.USERS + `/${id}`, obj, {
+    const response = await axios.put(baseURL + constURL.BOARDS + `/${id}`, obj, {
       headers: {
         Authorization: token,
       },
