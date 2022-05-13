@@ -1,17 +1,13 @@
 import axios from 'axios';
-import baseURL from '../baseURL';
+import api from '../api';
 import { constURL } from '../enum.services';
 import { ErrorResponse } from '../types.services';
 import { TsaksInterface } from './interface/tasks.interface';
 
-export async function getAllTasks(idBoard: string, idColumn: string, token: string) {
-  const tasksUrl = `${baseURL}${constURL.BOARDS}/${idBoard}/${constURL.COLUMNS}/${idColumn}/tasks`;
+export async function getAllTasks(idBoard: string, idColumn: string) {
+  const tasksUrl = `${constURL.BOARDS}/${idBoard}/${constURL.COLUMNS}/${idColumn}/tasks`;
   try {
-    const response = await axios.get(tasksUrl, {
-      headers: {
-        Authorization: token,
-      },
-    });
+    const response = await api.get(tasksUrl);
 
     return response.data;
   } catch (error) {
@@ -22,19 +18,10 @@ export async function getAllTasks(idBoard: string, idColumn: string, token: stri
   }
 }
 
-export async function createTasks(
-  idBoard: string,
-  idColumn: string,
-  token: string,
-  obj: TsaksInterface
-) {
-  const tasksUrl = `${baseURL}${constURL.BOARDS}/${idBoard}/${constURL.COLUMNS}/${idColumn}/${constURL.TASKS}`;
+export async function createTasks(idBoard: string, idColumn: string, obj: TsaksInterface) {
+  const tasksUrl = `${constURL.BOARDS}/${idBoard}/${constURL.COLUMNS}/${idColumn}/${constURL.TASKS}`;
   try {
-    const response = await axios.post(tasksUrl, obj, {
-      headers: {
-        Authorization: token,
-      },
-    });
+    const response = await api.post(tasksUrl, obj);
 
     return response.data;
   } catch (error) {
@@ -45,19 +32,10 @@ export async function createTasks(
   }
 }
 
-export async function getTasksById(
-  idBoard: string,
-  idColumn: string,
-  idTasks: string,
-  token: string
-) {
-  const tasksUrl = `${baseURL}${constURL.BOARDS}/${idBoard}/${constURL.COLUMNS}/${idColumn}/${constURL.TASKS}`;
+export async function getTasksById(idBoard: string, idColumn: string, idTasks: string) {
+  const tasksUrl = `${constURL.BOARDS}/${idBoard}/${constURL.COLUMNS}/${idColumn}/${constURL.TASKS}`;
   try {
-    const response = await axios.get(tasksUrl + `/${idTasks}`, {
-      headers: {
-        Authorization: token,
-      },
-    });
+    const response = await api.get(tasksUrl + `/${idTasks}`);
 
     return response.data;
   } catch (error) {
@@ -68,19 +46,10 @@ export async function getTasksById(
   }
 }
 
-export async function deleteTasks(
-  idBoard: string,
-  idColumn: string,
-  idTasks: string,
-  token: string
-) {
-  const tasksUrl = `${baseURL}${constURL.BOARDS}/${idBoard}/${constURL.COLUMNS}/${idColumn}/${constURL.TASKS}`;
+export async function deleteTasks(idBoard: string, idColumn: string, idTasks: string) {
+  const tasksUrl = `${constURL.BOARDS}/${idBoard}/${constURL.COLUMNS}/${idColumn}/${constURL.TASKS}`;
   try {
-    const response = await axios.delete(tasksUrl + `/${idTasks}`, {
-      headers: {
-        Authorization: token,
-      },
-    });
+    const response = await api.delete(tasksUrl + `/${idTasks}`);
 
     return response.data;
   } catch (error) {
@@ -95,16 +64,11 @@ export async function updateTasks(
   idBoard: string,
   idColumn: string,
   idTasks: string,
-  token: string,
   obj: TsaksInterface
 ) {
-  const tasksUrl = `${baseURL}${constURL.BOARDS}/${idBoard}/${constURL.COLUMNS}/${idColumn}/${constURL.TASKS}`;
+  const tasksUrl = `${constURL.BOARDS}/${idBoard}/${constURL.COLUMNS}/${idColumn}/${constURL.TASKS}`;
   try {
-    const response = await axios.put(tasksUrl + `/${idTasks}`, obj, {
-      headers: {
-        Authorization: token,
-      },
-    });
+    const response = await api.put(tasksUrl + `/${idTasks}`, obj);
 
     return response.data;
   } catch (error) {
