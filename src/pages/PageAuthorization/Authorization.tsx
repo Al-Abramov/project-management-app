@@ -1,26 +1,71 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { FieldValues, useForm } from 'react-hook-form';
+import { useAppDispatch } from '../../store/hook/hook';
+import { login } from '../../store/authSlice/authSlice';
+
+import { Container, Box, FormLabel, TextField, Button } from '@mui/material';
+import { useState } from 'react';
+
+export interface AuthorizationFields {
+  login: string;
+  password: string;
+}
 
 const Authorization = () => {
-  return (
-    <>
-      <div>
-        <h3>Authorization</h3>
-        <div>формой для Login / Sign up</div>
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const navigation = useNavigate();
 
-        <p>
-          Поля форм должны быть реализованы в соответствии с api backend приложения. Должна быть
-          реализована валидация.
-        </p>
-        <p>
-          Ошибки со стороны BE - (Not found, unhandled rejection, etc) должны отображаться
-          пользователю в user-friendly формате (toast, pop-up или что-то подобное, на ваше
-          усмотрение).
-        </p>
-        <p>При успешном логине пользователь должен быть перенаправлен на &quot;Main route&quot;</p>
-      </div>
+  const dispatch = useAppDispatch();
+
+  const { register, handleSubmit } = useForm<AuthorizationFields>();
+
+  const onSubmit = async (data: AuthorizationFields) => {
+    try {
+      setIsLoading(true);
+      await dispatch(login(data)).unwrap();
+      navigation('/main', { replace: true });
+    } catch (error) {
+      console.log('result error: ', error);
+    }
+
+    setIsLoading(false);
+  };
+
+  return (
+    <Container>
+      <form className="form" onSubmit={handleSubmit<FieldValues>(onSubmit)}>
+        <div className="form__title">
+          <h2>Авторизация</h2>
+          {isLoading && <p>....loading</p>}
+        </div>
+        <Box className="form__element">
+          <FormLabel htmlFor="login">Login:*</FormLabel>
+          <TextField
+            variant="outlined"
+            type="text"
+            {...register('login', { required: `reqeired field` })}
+            id="login"
+            defaultValue={`user001`}
+          />
+        </Box>
+        <Box className="form__element">
+          <FormLabel htmlFor="password">Password:*</FormLabel>
+          <TextField
+            error={false}
+            variant="outlined"
+            type="password"
+            {...register('password', { required: true })}
+            id="password"
+            defaultValue={`userpass@123`}
+          />
+        </Box>
+        <Button variant="contained" type="submit">
+          Submit
+        </Button>
+      </form>
 
       <Link to="/registration">Зарегистрироваться</Link>
-    </>
+    </Container>
   );
 };
 
