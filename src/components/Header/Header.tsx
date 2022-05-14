@@ -1,5 +1,5 @@
 import styles from './Header.module.scss';
-import { Container, Navbar, Nav, Button, Stack } from 'react-bootstrap';
+import { Container, Navbar, Nav, Button, Form } from 'react-bootstrap';
 import { Switch, FormControlLabel } from '@mui/material';
 import { useState } from 'react';
 import logo from '../../assets/icons/trello-mark.svg';
@@ -12,7 +12,7 @@ const Header = () => {
     <header>
       <Navbar bg="dark" expand="lg" variant="dark" sticky="top">
         <Container>
-          <Navbar.Brand href="/">
+          <Navbar.Brand href="https://rs.school/react/">
             <img
               src={logo}
               width="25"
@@ -28,6 +28,7 @@ const Header = () => {
               <Nav.Link href="main">Main</Nav.Link>
               <Nav.Link href="board">Create new board </Nav.Link>
             </Nav>
+            <Form.Check type="switch" id="custom-switch" label="Check this switch" />
             {logging ? (
               <Nav className="gap-2">
                 <Button variant="outline-light">Sign Out</Button>
