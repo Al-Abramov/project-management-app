@@ -7,7 +7,7 @@ const Footer = () => {
     <footer>
       <Navbar bg="dark" variant="dark" fixed="bottom">
         <Container className="flex-column flex-md-row align-items-center align-content-center justify-content-center flex-wrap">
-          <Navbar.Brand href="/">
+          <Navbar.Brand href="https://rs.school/react/">
             <img
               src={rs_logo}
               // width="25"

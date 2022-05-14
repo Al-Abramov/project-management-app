@@ -1,18 +1,23 @@
 import { Link } from 'react-router-dom';
 import './PageWelcome.scss';
-import { Container } from 'react-bootstrap';
+import { Button, Container } from 'react-bootstrap';
 
 const PageWelcome = () => {
   return (
-    <main className="welcome">
+    <main className="welcome ">
       <Container>
-        <h2 className="welcome__title"> Welcome! </h2>
-        <Link to="authorization" style={{ border: `1px solid green`, padding: 10 }}>
-          log in
-        </Link>
-        <Link to="registration" style={{ border: `1px solid green`, padding: 10 }}>
-          sign up
-        </Link>
+        <div className="welcome__content">
+          <h1 className="welcome__title"> Project management app </h1>
+          <span className="welcome__subtitle mt-3">Log in or register to get started</span>
+          <div className="welcome__buttons d-flex gap-2 mt-3">
+            <Button href="authorization" variant="outline-dark" size="lg" className="px-5">
+              log in
+            </Button>
+            <Button href="registration" variant="dark" size="lg" className="px-5">
+              sign up
+            </Button>
+          </div>
+        </div>
       </Container>
     </main>
   );
