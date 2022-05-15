@@ -1,11 +1,10 @@
 import axios from 'axios';
-import baseURL from '../baseURL';
 import { constURL } from '../enum.services';
 import { ErrorResponse } from '../types.services';
 
-export async function uploadFile(taskId: string, img: Blob, token: string) {
+export async function uploadFile(taskId: string, img: Blob) {
   try {
-    const response = await axios.post(
+    /*const response = await axios.post(
       baseURL + constURL.FILE,
       { taskId: taskId, file: img },
       {
@@ -14,7 +13,8 @@ export async function uploadFile(taskId: string, img: Blob, token: string) {
           'Content-Type': 'multipart/form-data',
         },
       }
-    );
+    );*/
+    const response = await axios.post(constURL.FILE, { taskId, file: img });
 
     return response;
   } catch (error) {
@@ -25,13 +25,9 @@ export async function uploadFile(taskId: string, img: Blob, token: string) {
   }
 }
 
-export async function downloadFile(taskId: string, fileName: string, token: string) {
+export async function downloadFile(taskId: string, fileName: string) {
   try {
-    const response = await axios.get(`${baseURL}${constURL.FILE}/${taskId}/${fileName}`, {
-      headers: {
-        Authorization: token,
-      },
-    });
+    const response = await axios.get(`${constURL.FILE}/${taskId}/${fileName}`);
 
     return response.data;
   } catch (error) {

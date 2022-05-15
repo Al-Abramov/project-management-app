@@ -1,16 +1,12 @@
 import axios from 'axios';
+import api from '../api';
 import { AccountIntrface } from '../authorization/interface.account';
-import baseURL from '../baseURL';
 import { constURL } from '../enum.services';
 import { ErrorResponse } from '../types.services';
 
-export async function getAllUsers(token: string) {
+export async function getAllUsers() {
   try {
-    const response = await axios.get(baseURL + constURL.USERS, {
-      headers: {
-        Authorization: token,
-      },
-    });
+    const response = await api.get(constURL.USERS);
 
     return response.data;
   } catch (error) {
@@ -21,13 +17,9 @@ export async function getAllUsers(token: string) {
   }
 }
 
-export async function getUserById(id: string, token: string) {
+export async function getUserById(id: string) {
   try {
-    const response = await axios.get(baseURL + constURL.USERS + `/${id}`, {
-      headers: {
-        Authorization: token,
-      },
-    });
+    const response = await api.get(constURL.USERS + `/${id}`);
 
     return response.data;
   } catch (error) {
@@ -38,13 +30,9 @@ export async function getUserById(id: string, token: string) {
   }
 }
 
-export async function deleteUser(id: string, token: string) {
+export async function deleteUser(id: string) {
   try {
-    const response = await axios.delete(baseURL + constURL.USERS + `/${id}`, {
-      headers: {
-        Authorization: token,
-      },
-    });
+    const response = await api.delete(constURL.USERS + `/${id}`);
 
     return response.data;
   } catch (error) {
@@ -55,13 +43,9 @@ export async function deleteUser(id: string, token: string) {
   }
 }
 
-export async function updateUser(id: string, token: string, obj: AccountIntrface) {
+export async function updateUser(id: string, obj: AccountIntrface) {
   try {
-    const response = await axios.put(baseURL + constURL.USERS + `/${id}`, obj, {
-      headers: {
-        Authorization: token,
-      },
-    });
+    const response = await api.put(constURL.USERS + `/${id}`, obj);
 
     return response.data;
   } catch (error) {

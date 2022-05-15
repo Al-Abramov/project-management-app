@@ -1,16 +1,12 @@
 import axios from 'axios';
-import baseURL from '../baseURL';
+import api from '../api';
 import { constURL } from '../enum.services';
 import { ErrorResponse } from '../types.services';
 import { BoardInterface } from './interfaces/BoardInterface';
 
-export async function getAllBoards(token: string) {
+export async function getAllBoards() {
   try {
-    const response = await axios.get(baseURL + constURL.BOARDS, {
-      headers: {
-        Authorization: token,
-      },
-    });
+    const response = await api.get(constURL.BOARDS);
 
     return response.data;
   } catch (error) {
@@ -21,13 +17,9 @@ export async function getAllBoards(token: string) {
   }
 }
 
-export async function createBoard(obj: BoardInterface, token: string) {
+export async function createBoard(obj: BoardInterface) {
   try {
-    const response = await axios.post(baseURL + constURL.BOARDS, obj, {
-      headers: {
-        Authorization: token,
-      },
-    });
+    const response = await api.post(constURL.BOARDS, obj);
 
     return response.data;
   } catch (error) {
@@ -38,13 +30,9 @@ export async function createBoard(obj: BoardInterface, token: string) {
   }
 }
 
-export async function getBoardById(id: string, token: string) {
+export async function getBoardById(boardId: string) {
   try {
-    const response = await axios.get(baseURL + constURL.BOARDS + `/${id}`, {
-      headers: {
-        Authorization: token,
-      },
-    });
+    const response = await api.get(constURL.BOARDS + `/${boardId}`);
 
     return response.data;
   } catch (error) {
@@ -55,13 +43,9 @@ export async function getBoardById(id: string, token: string) {
   }
 }
 
-export async function deleteBoard(id: string, token: string) {
+export async function deleteBoard(boardId: string) {
   try {
-    const response = await axios.delete(baseURL + constURL.BOARDS + `/${id}`, {
-      headers: {
-        Authorization: token,
-      },
-    });
+    const response = await api.delete(constURL.BOARDS + `/${boardId}`);
 
     return response.data;
   } catch (error) {
@@ -72,13 +56,9 @@ export async function deleteBoard(id: string, token: string) {
   }
 }
 
-export async function updateBoard(id: string, token: string, obj: BoardInterface) {
+export async function updateBoard(boardId: string, obj: BoardInterface) {
   try {
-    const response = await axios.put(baseURL + constURL.BOARDS + `/${id}`, obj, {
-      headers: {
-        Authorization: token,
-      },
-    });
+    const response = await api.put(constURL.BOARDS + `/${boardId}`, obj);
 
     return response.data;
   } catch (error) {

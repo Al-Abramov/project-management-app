@@ -1,17 +1,13 @@
 import axios from 'axios';
-import baseURL from '../baseURL';
+import api from '../api';
 import { constURL } from '../enum.services';
 import { ErrorResponse } from '../types.services';
 import { ColumnInterface } from './interface/columns.interface';
 
-export async function getAllColumns(id: string, token: string) {
-  const columnUrl = `${baseURL}${constURL.BOARDS}/${id}/${constURL.COLUMNS}`;
+export async function getAllColumns(boardId: string) {
+  const columnUrl = `${constURL.BOARDS}/${boardId}/${constURL.COLUMNS}`;
   try {
-    const response = await axios.get(columnUrl, {
-      headers: {
-        Authorization: token,
-      },
-    });
+    const response = await api.get(columnUrl);
 
     return response.data;
   } catch (error) {
@@ -22,14 +18,11 @@ export async function getAllColumns(id: string, token: string) {
   }
 }
 
-export async function createColumns(id: string, obj: ColumnInterface, token: string) {
-  const columnsURL = `${baseURL}${constURL.BOARDS}/${id}/${constURL.COLUMNS}`;
+export async function createColumns(boardId: string, obj: ColumnInterface) {
+  const columnsURL = `${constURL.BOARDS}/${boardId}/${constURL.COLUMNS}`;
+  /*При создании колонки с уже существующим order - ошибка 500 */
   try {
-    const response = await axios.post(columnsURL, obj, {
-      headers: {
-        Authorization: token,
-      },
-    });
+    const response = await api.post(columnsURL, obj);
 
     return response.data;
   } catch (error) {
@@ -40,14 +33,10 @@ export async function createColumns(id: string, obj: ColumnInterface, token: str
   }
 }
 
-export async function getColumnById(idBoard: string, idColumn: string, token: string) {
-  const columnUrl = `${baseURL}${constURL.BOARDS}/${idBoard}/${constURL.COLUMNS}`;
+export async function getColumnById(idBoard: string, idColumn: string) {
+  const columnUrl = `${constURL.BOARDS}/${idBoard}/${constURL.COLUMNS}`;
   try {
-    const response = await axios.get(columnUrl + `/${idColumn}`, {
-      headers: {
-        Authorization: token,
-      },
-    });
+    const response = await api.get(columnUrl + `/${idColumn}`);
 
     return response.data;
   } catch (error) {
@@ -58,14 +47,10 @@ export async function getColumnById(idBoard: string, idColumn: string, token: st
   }
 }
 
-export async function deleteColumn(idBoard: string, idColumn: string, token: string) {
-  const columnUrl = `${baseURL}${constURL.BOARDS}/${idBoard}/${constURL.COLUMNS}`;
+export async function deleteColumn(idBoard: string, idColumn: string) {
+  const columnUrl = `${constURL.BOARDS}/${idBoard}/${constURL.COLUMNS}`;
   try {
-    const response = await axios.delete(columnUrl + `/${idColumn}`, {
-      headers: {
-        Authorization: token,
-      },
-    });
+    const response = await api.delete(columnUrl + `/${idColumn}`);
 
     return response.data;
   } catch (error) {
@@ -76,19 +61,10 @@ export async function deleteColumn(idBoard: string, idColumn: string, token: str
   }
 }
 
-export async function updateColumn(
-  idBoard: string,
-  idColumn: string,
-  token: string,
-  obj: ColumnInterface
-) {
-  const columnUrl = `${baseURL}${constURL.BOARDS}/${idBoard}/${constURL.COLUMNS}`;
+export async function updateColumn(idBoard: string, idColumn: string, obj: ColumnInterface) {
+  const columnUrl = `${constURL.BOARDS}/${idBoard}/${constURL.COLUMNS}`;
   try {
-    const response = await axios.put(columnUrl + `/${idColumn}`, obj, {
-      headers: {
-        Authorization: token,
-      },
-    });
+    const response = await api.put(columnUrl + `/${idColumn}`, obj);
 
     return response.data;
   } catch (error) {

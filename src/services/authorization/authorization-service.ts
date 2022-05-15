@@ -1,13 +1,12 @@
 import axios from 'axios';
-import baseURL from '../baseURL';
+import api from '../api';
 import { constURL } from '../enum.services';
 import { ErrorResponse } from '../types.services';
 import { AccountIntrface } from './interface.account';
 
 export async function createAccount(obj: AccountIntrface) {
   try {
-    const response = await axios.post(baseURL + constURL.SIGNUP, obj);
-
+    const response = await api.post(constURL.SIGNUP, obj);
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
@@ -19,8 +18,7 @@ export async function createAccount(obj: AccountIntrface) {
 
 export async function createToken(obj: AccountIntrface) {
   try {
-    const response = await axios.post(baseURL + constURL.SIGNIN, obj);
-
+    const response = await api.post(constURL.SIGNIN, obj);
     return response.data.token;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
@@ -29,16 +27,3 @@ export async function createToken(obj: AccountIntrface) {
     throw error;
   }
 }
-
-/*const withAuthorization = async (fetchCallback: Promise) => {
-  try {
-    const response = await fetchCallback();
-    return response;
-  } catch (error) {
-    if (error.auth) {
-      redirectToHomePage();
-
-      throw error;
-    }
-  }
-}*/
