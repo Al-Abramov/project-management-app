@@ -10,14 +10,14 @@ import PageBoard from './pages/PageBoard/PageBoard';
 import EditProfile from './pages/PageEditProfile/EditProfile';
 import PageMain from './pages/PageMain/PageMain';
 import PageRegistration from './pages/PageRegistration/PageRegistration';
-import PageWelcom from './pages/PageWelcom/PageWelcom';
+import PageWelcome from './pages/PageWelcome/PageWelcome';
 
 function App() {
   return (
     <>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<PageWelcom />} />
+          <Route index element={<PageWelcome />} />
           <Route path="authorization" element={<Authorization />} />
           <Route path="registration" element={<PageRegistration />} />
           <Route
@@ -47,9 +47,7 @@ function App() {
         </Route>
       </Routes>
 
-      <div className="App">
-        <TestComponent />
-      </div>
+      <div className="App">{/*<TestComponent />*/}</div>
     </>
   );
 }

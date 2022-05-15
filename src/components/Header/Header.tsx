@@ -1,39 +1,54 @@
 import styles from './Header.module.scss';
-import { Link } from 'react-router-dom';
+import { Container, Navbar, Nav, Button, Form } from 'react-bootstrap';
+import { Switch, FormControlLabel } from '@mui/material';
+import { useState } from 'react';
+import logo from '../../assets/icons/trello-mark.svg';
 
 const Header = () => {
   const token = false;
+  const [logging, setLogging] = useState(false);
+  const [sticky, setSticky] = useState(false);
 
   return (
-    <header className={styles.header}>
-      <h2>header</h2>
-      <div>
-        <Link to="edit-profile">edit profile</Link>
-        <button>logout</button>
-        <button>create new board</button>
-        <label>
-          тогглер локализации
-          <input type="checkbox" name="language" />
-        </label>
-      </div>
-      <ul>
-        <li>
-          На всех роутах доступных при наличии токена должен присутствовать sticky header ( момент,
-          когда он становится sticky (при наличии на странице скролла) должен быть анимирован
-          (например его цвет может потемнеть или высота слегка уменьшится)).
-        </li>
-        <li>
-          В хэдере должны быть кнопки: edit profile, logout, create new board, тогглер локализации.
-          Edit profile должен отправлять нас на роут с формой для edit profile. Требования к форме
-          такие же как и ко всем формам в приложении. Должна быть кнопка удаления юзера. В случае
-          этого действия =&gt; &quot;confirmation modal&quot; =&gt; пользователя должно разлогинить
-          и пользователь должен быть удалён из базы данных.
-        </li>
-        <li>Логаут - логаутит.</li>
-        <li>create new board - открывает модальное окно с формой для создания борды.</li>
-        <li>Требования к форме такие же как и ко всем формам в приложении.</li>
-      </ul>
-    </header>
+    <Navbar
+      bg="dark"
+      expand="lg"
+      variant="dark"
+      sticky={sticky ? 'top' : undefined}
+      fixed={sticky ? undefined : 'top'}
+    >
+      <Container>
+        <Navbar.Brand href="/">
+          <img
+            src={logo}
+            width="25"
+            height="25"
+            className="d-inline-block align-top m-1"
+            alt="App logo"
+          />
+          PM-app
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+            <Nav.Link href="main">Main</Nav.Link>
+            <Nav.Link href="board">Create new board </Nav.Link>
+          </Nav>
+          <Form.Check type="switch" id="custom-switch" className="py-2" label="" />
+          {logging ? (
+            <Nav className="gap-2">
+              <Button variant="outline-light">Sign Out</Button>
+              <Button variant="light">Profile</Button>
+            </Nav>
+          ) : (
+            <Nav className="gap-2">
+              <Button variant="outline-light">Sign In</Button>
+              <Button variant="light">Sign Up</Button>
+            </Nav>
+          )}
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 };
 

@@ -1,0 +1,16 @@
+.welcome {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #e7e7e7;
+
+  &__content{
+    position: absolute;
+    top: 30%;
+    //transform: translateY(-50%);
+  }
+  &__title {
+  }
+  &__subtitle {
+  }
+}
