@@ -1,7 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.module.scss';
-import { TestComponent } from './components/testComponent';
 
 import RequireAuth from './components/RequireAuth/RequireAuth';
 import Layout from './pages/Layout/Layout';
@@ -46,8 +45,6 @@ function App() {
           />
         </Route>
       </Routes>
-
-      <div className="App">{/*<TestComponent />*/}</div>
     </>
   );
 }
