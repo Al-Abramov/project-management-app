@@ -1,20 +1,17 @@
+import { Board } from './Board/Board';
+import style from './PageMain.module.scss';
+import { TitlePageMain } from './Title/TitlePageMain';
+
 const PageMain = () => {
   return (
-    <div>
-      <h3>Main</h3>
-      <p> Отображает борды списком.</p>
-      <p>
-        Борды отображаются с маленьким превью из доступной информации (title, description, etc). По
-        клику на элемент переходим на board item (Board route). Также должна присутствовать кнопка
-        для удаления борды.
-      </p>
-      <p>
-        При попытке удаления борды мы должны получить confirmation modal в котором должны
-        подтвердить серёзность наших намерений. confirmation modal должен быть универсальным
-        компонентом (одним на всё приложение). глобальный поиск(опционально): поиск таска по номеру
-        таска, названию, пользователям, которые в нём участвуют и по тексту описания задачи.
-      </p>
-    </div>
+    <main className={style.main}>
+      <div className={style.warapper}>
+        <TitlePageMain />
+        <section className={style.boardsWrap}>
+          <Board />
+        </section>
+      </div>
+    </main>
   );
 };
 
