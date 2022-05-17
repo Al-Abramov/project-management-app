@@ -1,12 +1,12 @@
 import { Navigate, useLocation } from 'react-router-dom';
+import { useAppSelector } from '../../store/hook/hook';
 
 interface PropsRequireAuth {
   children: JSX.Element;
 }
 
 const RequireAuth = ({ children }: PropsRequireAuth) => {
-  /*  получаем token из redux  */
-  const token = false;
+  const token = localStorage.getItem('token');
   const location = useLocation();
 
   if (!token) {

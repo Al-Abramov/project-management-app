@@ -1,11 +1,24 @@
 import styles from './Header.module.scss';
+
 import { Container, Navbar, Nav, Button, Form } from 'react-bootstrap';
 import { Switch, FormControlLabel } from '@mui/material';
 import { useState } from 'react';
 import logo from '../../assets/icons/trello-mark.svg';
 
+import { Link, useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../store/hook/hook';
+import { logout } from '../../store/authSlice/authSlice';
+
 const Header = () => {
-  const token = false;
+  const navigation = useNavigate();
+  const token = localStorage.getItem('token');
+
+  const reducer = useAppDispatch();
+
+  const logoutHandle = () => {
+    reducer(logout());
+    navigation('/');
+  };
   const [logging, setLogging] = useState(false);
   const [sticky, setSticky] = useState(false);
 
@@ -38,7 +51,9 @@ const Header = () => {
           {logging ? (
             <Nav className="gap-2">
               <Button variant="outline-light">Sign Out</Button>
-              <Button variant="light">Profile</Button>
+              <Button variant="light" onClick={logoutHandle}>
+                Profile
+              </Button>
             </Nav>
           ) : (
             <Nav className="gap-2">
