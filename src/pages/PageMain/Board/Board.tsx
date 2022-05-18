@@ -1,7 +1,12 @@
 import { Card } from '@mui/material';
 import style from './Board.module.scss';
 
-export const Board = () => {
+interface BoardProps {
+  title: string;
+  description: string;
+}
+
+export const Board: React.FC<BoardProps> = (props) => {
   return (
     <Card
       raised
@@ -17,8 +22,8 @@ export const Board = () => {
         cursor: 'pointer',
       }}
     >
-      <p className={style.titleBoard}>Description desk</p>
-      <p className={style.descrBoard}>Title desk name</p>
+      <p className={style.titleBoard}>{props.title}</p>
+      <p className={style.descrBoard}>{props.description}</p>
       <button className={style.delete}>Delete</button>
     </Card>
   );

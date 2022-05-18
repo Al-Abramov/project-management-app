@@ -32,5 +32,11 @@ h3 {
   gap: 10%;
   justify-content: center;
   width: 52%;
-  padding: 20px 0;
+  padding: 40px 0;
+}
+
+@media (max-width: 570px) {
+  .boardsWrap {
+    width: 75%;
+  }
 }
