@@ -76,7 +76,7 @@ const authSlice = createSlice({
       .addCase(registerUser.fulfilled, (state) => {
         state.isLoading = false;
 
-        state.message = 'регистрация прошла успешна';
+        state.message = 'регистрация прошла успешно';
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.message = action.payload as string;
@@ -90,7 +90,7 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.isLoading = false;
 
-        state.message = 'авторизация прошла успешна';
+        state.message = 'авторизация прошла успешно';
         const user = jwt_decode(action.payload) as User;
         state.user = user;
       })
