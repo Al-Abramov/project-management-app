@@ -8,7 +8,6 @@ interface TitlePageMainProps {
 export const TitlePageMain: FC<TitlePageMainProps> = (props) => {
   const callModal = () => {
     props.getModal();
-    console.log('MODAL');
   };
 
   return (

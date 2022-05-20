@@ -1,0 +1,18 @@
+p {
+  margin: 0;
+}
+
+.form {
+  width: 300px;
+  margin-top: 20px;
+}
+
+.inputWrap {
+  position: relative;
+}
+
+.error {
+  position: absolute;
+  bottom: 5px;
+  color: rgb(255, 0, 0);
+}
