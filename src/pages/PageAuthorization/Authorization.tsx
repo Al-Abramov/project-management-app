@@ -1,25 +1,18 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { FieldValues, useForm } from 'react-hook-form';
-import { useAppDispatch, useAppSelector } from '../../store/hook/hook';
-import { cleanMessage, login } from '../../store/authSlice/authSlice';
-
+import { useAppDispatch } from '../../store/hook/hook';
 import styles from './Authorization.module.scss';
 
-import {
-  Container,
-  Box,
-  FormLabel,
-  TextField,
-  Button,
-  CircularProgress,
-  Alert,
-} from '@mui/material';
+import { Container, Box, TextField, Button, CircularProgress, Alert } from '@mui/material';
 import { AccountIntrface } from '../../services/authorization/interface.account';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { login } from '../../store/userSlice/userSlice';
 
 const Authorization = () => {
-  const { isLoading, message } = useAppSelector((state) => state.authReducer);
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState('');
+
   const navigation = useNavigate();
 
   const dispatch = useAppDispatch();
@@ -28,29 +21,34 @@ const Authorization = () => {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isValid },
+    formState: { errors, isValid, isSubmitting },
   } = useForm<AccountIntrface>({ mode: 'onChange' });
 
   const onSubmit = async (data: AccountIntrface) => {
     try {
+      setIsLoading(true);
       await dispatch(login(data)).unwrap();
       navigation('/main', { replace: true });
-    } catch (error) {
-      console.log('eeerrror!!!');
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (errorMessage: any) {
+      setMessage(errorMessage);
+    } finally {
+      setIsLoading(false);
+      reset();
     }
-    reset();
   };
 
   useEffect(() => {
     if (message) {
       setTimeout(() => {
-        dispatch(cleanMessage());
+        setMessage('');
       }, 3000);
     }
-  }, [dispatch, message]);
+  }, [message]);
 
   return (
-    <Container>
+    <Container className={styles.container}>
       <form className={styles.form} onSubmit={handleSubmit<FieldValues>(onSubmit)}>
         {isLoading && (
           <CircularProgress
@@ -66,10 +64,8 @@ const Authorization = () => {
           <h2 className={styles.form__title}>Авторизация</h2>
         </div>
         <Box className={styles.form__element}>
-          <FormLabel htmlFor="login" className={styles.form__label}>
-            Login:*
-          </FormLabel>
           <TextField
+            label="Login"
             variant="outlined"
             type="text"
             {...register('login', { required: `reqeired field` })}
@@ -80,10 +76,8 @@ const Authorization = () => {
           <div className={styles.form__feedback}>{errors.login?.message}</div>
         </Box>
         <Box className={styles.form__element}>
-          <FormLabel htmlFor="password" className={styles.form__label}>
-            Password:*
-          </FormLabel>
           <TextField
+            label="Password"
             variant="outlined"
             type="password"
             {...register('password', { required: true })}
@@ -91,9 +85,10 @@ const Authorization = () => {
             error={!!errors?.password}
             defaultValue={`userpass@123`}
           />
+
           <div className={styles.form__feedback}>{errors.password?.message}</div>
         </Box>
-        <Button variant="contained" type="submit" disabled={!isValid}>
+        <Button variant="contained" type="submit" disabled={!isValid || isSubmitting}>
           Submit
         </Button>
       </form>

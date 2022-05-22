@@ -1,5 +1,5 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import authReducer from './authSlice/authSlice';
+import authReducer from './userSlice/userSlice';
 import modalReducer from './modalSlice/modalSlice';
 import allBoardsReducer from './allBoardsSlice/allBoardsSlice';
 import boardReducer from './boardSlice/boardSlice';

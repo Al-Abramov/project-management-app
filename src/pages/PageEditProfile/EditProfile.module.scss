@@ -23,6 +23,7 @@
 
   &__label {
     font-size: 20px;
+    margin-bottom: 10px;
   }
 
   &__feedback {
@@ -30,5 +31,14 @@
     bottom: -25px;
     left: 0;
     color: red;
+  }
+
+  &__controls {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  &__btn--delete {
+    border-color: red;
   }
 }

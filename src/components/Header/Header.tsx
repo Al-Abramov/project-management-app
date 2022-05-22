@@ -7,7 +7,7 @@ import logo from '../../assets/icons/trello-mark.svg';
 
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../store/hook/hook';
-import { logout } from '../../store/authSlice/authSlice';
+import { logout } from '../../store/userSlice/userSlice';
 
 const Header = () => {
   const navigation = useNavigate();
