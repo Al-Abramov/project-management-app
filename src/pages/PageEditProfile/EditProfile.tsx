@@ -2,19 +2,12 @@ import { FieldValues, useForm } from 'react-hook-form';
 import { useAppDispatch } from '../../store/hook/hook';
 import styles from './EditProfile.module.scss';
 
-import {
-  Container,
-  Box,
-  TextField,
-  Button,
-  CircularProgress,
-  Alert,
-  InputLabel,
-} from '@mui/material';
+import { Container, Box, TextField, Button, Alert, InputLabel } from '@mui/material';
 import { AccountIntrface } from '../../services/authorization/interface.account';
 import { deleteProfile, getProfile, updateProfile } from '../../store/userSlice/userSlice';
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { LoadSpinner } from '../../components/Spinner/Spinner';
 
 const EditProfile = () => {
   const navigation = useNavigate();
@@ -108,16 +101,7 @@ const EditProfile = () => {
   return (
     <Container className={styles.container}>
       <form className={styles.form} onSubmit={handleSubmit<FieldValues>(onSubmit)}>
-        {isLoading && (
-          <CircularProgress
-            sx={{
-              position: 'absolute',
-              left: '50%',
-              top: '50%',
-              transform: 'translate(-50%, -50%)',
-            }}
-          />
-        )}
+        {isLoading && <LoadSpinner size={80} />}
         <div className={styles.form__element}>
           <h2 className={styles.form__title}> Edit profile</h2>
         </div>
