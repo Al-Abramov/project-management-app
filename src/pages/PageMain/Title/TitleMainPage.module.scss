@@ -1,0 +1,54 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  font-size: 28px;
+  font-weight: 600;
+
+  span {
+    margin-left: 10px;
+  }
+}
+
+.logo {
+  width: 70px;
+  height: 70px;
+  background-image: url('../../../assets/icons/trello-mark.svg');
+  background-size: cover;
+  margin-right: 20px;
+}
+
+.subttl {
+  display: flex;
+  align-self: center;
+  font-size: 52px;
+  margin-right: 20px;
+}
+
+.createBtn {
+  width: 150px;
+  border: none;
+  outline: none;
+  margin-left: 20px;
+}
+
+
+@media (max-width: 570px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .logoContainer {
+    margin-bottom: 20px;
+  }
+
+  .createBtn {
+    width: 100%;
+    height: 60px;
+    margin: 0;
+  }
+}

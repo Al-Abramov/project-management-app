@@ -27,8 +27,8 @@ const Header = () => {
       bg="dark"
       expand="lg"
       variant="dark"
-      sticky={sticky ? 'top' : undefined}
-      fixed={sticky ? undefined : 'top'}
+      //sticky={sticky ? 'top' : undefined}
+      //fixed={sticky ? undefined : 'top'}
     >
       <Container>
         <Navbar.Brand href="/">
@@ -44,8 +44,8 @@ const Header = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="main">Main</Nav.Link>
-            <Nav.Link href="board">Create new board </Nav.Link>
+            <Link to="main">Main</Link>
+            <Link to="board">Create new board </Link>
           </Nav>
           <Form.Check type="switch" id="custom-switch" className="py-2" label="" />
           {logging ? (

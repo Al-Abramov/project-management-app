@@ -5,12 +5,12 @@ import ConfirmModal from '../../components/ConfirmModal/ConfirmModal';
 
 const Layout = () => {
   return (
-    <div>
+    <>
       <Header />
       <Outlet />
       <Footer />
-      <ConfirmModal />
-    </div>
+    </>
+
   );
 };
 
