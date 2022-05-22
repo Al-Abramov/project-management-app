@@ -8,6 +8,7 @@ import Authorization from './pages/PageAuthorization/Authorization';
 import PageBoard from './pages/PageBoard/PageBoard';
 import EditProfile from './pages/PageEditProfile/EditProfile';
 import PageMain from './pages/PageMain/PageMain';
+import PageNotFound from './pages/PageNotFound/PageNotFound';
 import PageRegistration from './pages/PageRegistration/PageRegistration';
 import PageWelcome from './pages/PageWelcome/PageWelcome';
 
@@ -44,6 +45,7 @@ function App() {
             }
           />
         </Route>
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </>
   );
