@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
+import { LoadSpinner } from '../../components/Spinner/Spinner';
 import { useModal } from '../../hooks/useModal';
 import { ConfirmModal } from '../../modals/ConfirmModal/ConfirmModal';
 import { BOARD_MODAL, CONFIRM_MODAL } from '../../modals/constModal';
-import { deleteBoard, getAllBoards } from '../../services/boards/board-service';
-import { getBoards } from '../../store/boardSlice/boardSlice';
+import { deleteBoard } from '../../services/boards/board-service';
+import { fetchAllBoard } from '../../store/allBoardsSlice/allBoardsSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hook/hook';
 import { Board } from './Board/Board';
 import { ModalCreateBoard } from './Modal/ModalCreateBoard';
@@ -12,7 +13,8 @@ import { TitlePageMain } from './Title/TitlePageMain';
 
 const PageMain = () => {
   const dispatch = useAppDispatch();
-  const data = useAppSelector((state) => state.boardReducer.boards);
+  const data = useAppSelector((state) => state.allBoardsReducer.boards);
+  const isLoading = useAppSelector((state) => state.allBoardsReducer.isLoading);
   const idBoard = useAppSelector((state) => state.boardReducer.id) as string;
 
   const [BoardModal, onClose, onOpen, isOpen] = useModal(BOARD_MODAL, ModalCreateBoard);
@@ -22,8 +24,7 @@ const PageMain = () => {
   );
 
   const getBoardsData = React.useCallback(async () => {
-    const data = await getAllBoards();
-    dispatch(getBoards(data));
+    dispatch(fetchAllBoard());
   }, [dispatch]);
 
   const deletePageMainBoard = async (idBoard: string) => {
@@ -56,6 +57,7 @@ const PageMain = () => {
             title="Удалить доску?"
             action={() => deletePageMainBoard(idBoard)}
           />
+          {isLoading && <LoadSpinner size={80} />}
         </section>
       </div>
     </main>

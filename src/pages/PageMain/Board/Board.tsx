@@ -1,8 +1,12 @@
 import { Card } from '@mui/material';
 import style from './Board.module.scss';
-import Button from '@mui/material/Button';
 import { useAppDispatch } from '../../../store/hook/hook';
 import { setId } from '../../../store/boardSlice/boardSlice';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import { fetchAllColumns } from '../../../store/boardSlice/boardSlice';
 
 interface BoardProps {
   id: string | undefined;
@@ -14,11 +18,22 @@ interface BoardProps {
 export const Board: React.FC<BoardProps> = (props) => {
   const dispatch = useAppDispatch();
 
-  const handleDeleteBtn = () => {
+  const navigate = useNavigate();
+
+  const handleDeleteBtn = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
     if (props.id) {
       dispatch(setId(props.id));
     }
     props.onOpen();
+  };
+
+  const redirectBoard = async () => {
+    if (props.id) {
+      dispatch(fetchAllColumns(props.id));
+      dispatch(setId(props.id));
+    }
+    navigate('/board');
   };
 
   return (
@@ -36,26 +51,23 @@ export const Board: React.FC<BoardProps> = (props) => {
         padding: '10px',
         cursor: 'pointer',
       }}
+      className={style.board}
+      onClick={redirectBoard}
     >
       <p className={style.titleBoard}>{props.title}</p>
       <p className={style.descrBoard}>{props.description}</p>
-      <Button
+      <IconButton
         sx={{
           display: 'flex',
           alignSelf: 'flex-end',
-          marginTop: '15px',
-          width: '70px',
+          marginTop: '25px',
           fontSize: '14px',
-          textTransform: 'none',
-          height: '30px',
-          cursor: 'pointer',
         }}
-        variant="text"
-        color="error"
+        aria-label="delete"
         onClick={handleDeleteBtn}
       >
-        Удалить
-      </Button>
+        <DeleteIcon />
+      </IconButton>
     </Card>
   );
 };

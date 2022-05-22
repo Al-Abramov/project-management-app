@@ -6,14 +6,14 @@ import TextField from '@mui/material/TextField';
 import DialogActions from '@mui/material/DialogActions';
 import style from './ModalCreateButton.module.scss';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { createBoard, getAllBoards } from '../../../services/boards/board-service';
+import { createBoard } from '../../../services/boards/board-service';
 import { CreateBoardForm } from './interfaces/CreateBoardModal.interfaces';
 import { useAppDispatch } from '../../../store/hook/hook';
 import React from 'react';
-import { getBoards } from '../../../store/boardSlice/boardSlice';
 import { callModal } from '../../../store/modalSlice/modalSlice';
 import { BOARD_MODAL } from '../../../modals/constModal';
 import { ModalProps } from '../../../modals/interfaces/ModalsProps';
+import { fetchAllBoard } from '../../../store/allBoardsSlice/allBoardsSlice';
 
 export const ModalCreateBoard: React.FC<ModalProps> = (props) => {
   const dispatch = useAppDispatch();
@@ -29,8 +29,7 @@ export const ModalCreateBoard: React.FC<ModalProps> = (props) => {
 
   const onSubmit: SubmitHandler<CreateBoardForm> = async (data) => {
     await createBoard(data);
-    const dataBoards = await getAllBoards();
-    dispatch(getBoards(dataBoards));
+    dispatch(fetchAllBoard());
     dispatch(callModal({ name: BOARD_MODAL, isOpen: false }));
     reset();
   };
