@@ -17,12 +17,6 @@ interface UserState {
   name: string;
 }
 
-interface UpdateUser {
-  login?: string;
-  name?: string;
-  password?: string;
-}
-
 const token = localStorage.getItem('token');
 
 export const registerUser = createAsyncThunk<UserState, AccountIntrface, { rejectValue: string }>(
@@ -58,7 +52,7 @@ export const updateProfile = createAsyncThunk<UserState, AccountIntrface, { stat
   async (data, { getState }) => {
     const id = getState().authReducer.id as string;
 
-    const result = await updateUser(id, data); // наверное тип не тот ?!
+    const result = await updateUser(id, data);
     return result;
   }
 );

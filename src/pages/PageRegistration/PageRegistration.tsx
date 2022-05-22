@@ -2,12 +2,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FieldValues, useForm } from 'react-hook-form';
 import { useAppDispatch } from '../../store/hook/hook';
 
-import { Container, Box, TextField, Button, CircularProgress, Alert } from '@mui/material';
+import { Container, Box, TextField, Button, Alert } from '@mui/material';
 import { AccountIntrface } from '../../services/authorization/interface.account';
 import { registerUser } from '../../store/userSlice/userSlice';
 
 import styles from './PageRegistration.module.scss';
 import { useEffect, useState } from 'react';
+import { LoadSpinner } from '../../components/Spinner/Spinner';
 
 const PageRegistration = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -48,16 +49,7 @@ const PageRegistration = () => {
   return (
     <Container className={styles.container}>
       <form className={styles.form} onSubmit={handleSubmit<FieldValues>(onSubmit)}>
-        {isLoading && (
-          <CircularProgress
-            sx={{
-              position: 'absolute',
-              left: '50%',
-              top: '50%',
-              transform: 'translate(-50%, -50%)',
-            }}
-          />
-        )}
+        {isLoading && <LoadSpinner size={80} />}
         <div className={styles.form__element}>
           <h2 className={styles.form__title}>Регистрация</h2>
         </div>

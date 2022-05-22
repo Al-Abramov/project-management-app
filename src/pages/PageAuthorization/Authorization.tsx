@@ -3,11 +3,12 @@ import { FieldValues, useForm } from 'react-hook-form';
 import { useAppDispatch } from '../../store/hook/hook';
 import styles from './Authorization.module.scss';
 
-import { Container, Box, TextField, Button, CircularProgress, Alert } from '@mui/material';
+import { Container, Box, TextField, Button, Alert } from '@mui/material';
 import { AccountIntrface } from '../../services/authorization/interface.account';
 
 import { useEffect, useState } from 'react';
 import { login } from '../../store/userSlice/userSlice';
+import { LoadSpinner } from '../../components/Spinner/Spinner';
 
 const Authorization = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -50,16 +51,7 @@ const Authorization = () => {
   return (
     <Container className={styles.container}>
       <form className={styles.form} onSubmit={handleSubmit<FieldValues>(onSubmit)}>
-        {isLoading && (
-          <CircularProgress
-            sx={{
-              position: 'absolute',
-              left: '50%',
-              top: '50%',
-              transform: 'translate(-50%, -50%)',
-            }}
-          />
-        )}
+        {isLoading && <LoadSpinner size={80} />}
         <div className={styles.form__element}>
           <h2 className={styles.form__title}>Авторизация</h2>
         </div>
