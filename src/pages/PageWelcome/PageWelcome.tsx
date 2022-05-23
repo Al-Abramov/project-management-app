@@ -18,6 +18,7 @@ const PageWelcome = () => {
             </Button>
           </div>
         </div>
+        <div className="welcome__about"></div>
       </Container>
     </main>
   );

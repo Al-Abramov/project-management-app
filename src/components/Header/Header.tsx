@@ -1,11 +1,10 @@
 import styles from './Header.module.scss';
-
-import { Container, Navbar, Nav, Button, Form } from 'react-bootstrap';
-import { Switch, FormControlLabel } from '@mui/material';
+import './Header.scss';
+import { Container, Navbar, Nav, Button, Form, NavDropdown } from 'react-bootstrap';
 import { useState } from 'react';
 import logo from '../../assets/icons/trello-mark.svg';
 
-import { Link, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../store/hook/hook';
 import { logout } from '../../store/userSlice/userSlice';
 
@@ -19,51 +18,59 @@ const Header = () => {
     reducer(logout());
     navigation('/');
   };
-  const [logging, setLogging] = useState(false);
+  const [logging, setLogging] = useState(true);
   const [sticky, setSticky] = useState(false);
 
+  const changeColor = () => {
+    window.scrollY >= 40 ? setSticky(true) : setSticky(false);
+  };
+  window.addEventListener('scroll', changeColor);
+
   return (
-    <Navbar
-      bg="dark"
-      expand="lg"
-      variant="dark"
-      //sticky={sticky ? 'top' : undefined}
-      //fixed={sticky ? undefined : 'top'}
-    >
-      <Container>
-        <Navbar.Brand href="/">
-          <img
-            src={logo}
-            width="25"
-            height="25"
-            className="d-inline-block align-top m-1"
-            alt="App logo"
-          />
-          PM-app
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <Link to="main">Main</Link>
-            <Link to="board">Create new board </Link>
-          </Nav>
-          <Form.Check type="switch" id="custom-switch" className="py-2" label="" />
-          {logging ? (
-            <Nav className="gap-2">
-              <Button variant="outline-light">Sign Out</Button>
-              <Button variant="light" onClick={logoutHandle}>
-                Profile
-              </Button>
+    <header className="header-sticky">
+      <Navbar expand="lg" bg={sticky ? 'light' : 'dark'} variant={sticky ? 'light' : 'dark'}>
+        <Container>
+          <Navbar.Brand href="/">
+            <img
+              src={logo}
+              width="25"
+              height="25"
+              className="d-inline-block align-top m-1"
+              alt="App logo"
+            />
+            PM-app
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="me-auto">
+              <Nav.Link as={NavLink} to="main">
+                Main
+              </Nav.Link>
+              <Nav.Link as={NavLink} to="board">
+                Create new board
+              </Nav.Link>
             </Nav>
-          ) : (
-            <Nav className="gap-2">
-              <Button variant="outline-light">Sign In</Button>
-              <Button variant="light">Sign Up</Button>
-            </Nav>
-          )}
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+            <Form.Check type="switch" id="custom-switch" className="py-2" label="" />
+            {logging ? (
+              <NavDropdown menuVariant="dark" title={'profileName'} id="nav-dropdown-dark-example">
+                <NavDropdown.Item href="#action1">settings</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item href="#action1">Sign out</NavDropdown.Item>
+              </NavDropdown>
+            ) : (
+              <Nav className="gap-2">
+                <Nav.Link as={NavLink} to="authorization">
+                  Sign In
+                </Nav.Link>
+                <Nav.Link as={NavLink} to="registration">
+                  Sign Up
+                </Nav.Link>
+              </Nav>
+            )}
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+    </header>
   );
 };
 
