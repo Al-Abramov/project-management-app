@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
-const baseURL = 'https://afternoon-savannah-72578.herokuapp.com/';
+const baseURL = 'https://ancient-island-62112.herokuapp.com/';
 
 const api = axios.create({
   baseURL,
