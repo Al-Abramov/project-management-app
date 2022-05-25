@@ -1,40 +1,22 @@
 import { Task } from '../Task/Task';
 import Button from '@mui/material/Button';
-import DoneIcon from '@mui/icons-material/Done';
-import ClearIcon from '@mui/icons-material/Clear';
-import DeleteIcon from '@mui/icons-material/Delete';
-import IconButton from '@mui/material/IconButton';
 import Card from '@mui/material/Card';
 import style from './Column.module.scss';
+import { ColumnHeader } from './ColumnHeader/ColumnHeader';
 
-export const Column = () => {
+interface ColumnProps {
+  title: string;
+}
+
+export const Column: React.FC<ColumnProps> = (props) => {
   return (
-    <Card className={style.column} raised>
+    <Card sx={{ backgroundColor: '#C0C0C0' }} className={style.column} raised>
       <div className={style.columnWrapper}>
         <div className={style.columnHeader}>
-          <div className={style.columnBtnContainer}>
-            <IconButton
-              sx={{ marginRight: '5px' }}
-              className={style.columnBtn}
-              color="success"
-              aria-label="delete"
-            >
-              <DoneIcon />
-            </IconButton>
-            <IconButton className={style.columnBtn}>
-              <ClearIcon />
-            </IconButton>
-          </div>
-          <input className={style.input} type="text" value="Title" />
-          <div>
-            <IconButton sx={{ padding: '0' }} aria-label="delete">
-              <DeleteIcon />
-            </IconButton>
-          </div>
+          <h4 className={style.columnHeaderTitle}>{props.title}</h4>
+          {/*<ColumnHeader />*/}
         </div>
         <div className={style.tasksContainer}>
-          <Task />
-          <Task />
           <Task />
         </div>
         <div className={style.taskBtnContainer}>
@@ -46,9 +28,8 @@ export const Column = () => {
             }}
             variant="contained"
           >
-            Создать колонку
+            Создать задачу
           </Button>
-          {/*<button className={style.taskBtn}>Создать задачу</button>*/}
         </div>
       </div>
     </Card>

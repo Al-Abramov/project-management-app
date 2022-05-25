@@ -1,24 +1,36 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getAllColumns } from '../../services/columns/columns-service';
+import { getBoardById } from '../../services/boards/board-service';
 import { ColumnInterface } from '../../services/columns/interface/columns.interface';
+
+interface BoardInfoInterface {
+  id: string;
+  title: string;
+  description: string;
+  columns: ColumnInterface[];
+}
 
 interface BoardState {
   id: string | null;
-  columns: ColumnInterface[];
+  boardInfo: BoardInfoInterface;
 }
 
 const initialState: BoardState = {
   id: null,
-  columns: [],
+  boardInfo: {
+    id: '',
+    title: '',
+    description: '',
+    columns: [],
+  },
 };
 
-export const fetchAllColumns = createAsyncThunk<
-  ColumnInterface[],
+export const fetchBoardInfo = createAsyncThunk<
+  BoardInfoInterface,
   string,
   { rejectValue: unknown }
 >('board/fetchAllColumns', async (boardId, { rejectWithValue }) => {
   try {
-    const data = await getAllColumns(boardId);
+    const data = await getBoardById(boardId);
     return data;
   } catch (error) {
     return rejectWithValue(error);
@@ -34,8 +46,8 @@ const boardSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchAllColumns.fulfilled, (state, action) => {
-      state.columns = action.payload;
+    builder.addCase(fetchBoardInfo.fulfilled, (state, action) => {
+      state.boardInfo = action.payload;
     });
   },
 });

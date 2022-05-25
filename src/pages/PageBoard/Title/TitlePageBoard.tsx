@@ -1,7 +1,22 @@
 import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
 import style from './TitlePageBoard.module.scss';
 
-export const TitlePageBoard = () => {
+interface TitlePageBoardProps {
+  getModal: () => void;
+}
+
+export const TitlePageBoard: React.FC<TitlePageBoardProps> = (props) => {
+  const navigate = useNavigate();
+
+  const getBack = () => {
+    navigate(-1);
+  };
+
+  const callModal = () => {
+    props.getModal();
+  };
+
   return (
     <section className={style.titleContainer}>
       <div>
@@ -12,6 +27,7 @@ export const TitlePageBoard = () => {
             fontSize: '14px',
           }}
           variant="contained"
+          onClick={callModal}
         >
           Создать колонку
         </Button>
@@ -26,6 +42,7 @@ export const TitlePageBoard = () => {
             padding: '0 5px',
           }}
           variant="outlined"
+          onClick={getBack}
         >
           Вернуться к доскам
         </Button>

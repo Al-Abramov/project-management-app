@@ -1,12 +1,11 @@
 import { Card } from '@mui/material';
 import style from './Board.module.scss';
 import { useAppDispatch } from '../../../store/hook/hook';
-import { setId } from '../../../store/boardSlice/boardSlice';
+import { fetchBoardInfo, setId } from '../../../store/boardSlice/boardSlice';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
 import React from 'react';
-import { fetchAllColumns } from '../../../store/boardSlice/boardSlice';
 
 interface BoardProps {
   id: string | undefined;
@@ -30,7 +29,7 @@ export const Board: React.FC<BoardProps> = (props) => {
 
   const redirectBoard = async () => {
     if (props.id) {
-      dispatch(fetchAllColumns(props.id));
+      dispatch(fetchBoardInfo(props.id));
       dispatch(setId(props.id));
     }
     navigate('/board');

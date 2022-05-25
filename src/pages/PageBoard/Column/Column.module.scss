@@ -3,7 +3,6 @@
   min-width: 200px;
   //border: 1px solid #000;
   border-radius: 5px;
-  background-color: cadetblue;
 }
 
 .column:not(:last-child) {
@@ -18,31 +17,18 @@
 .columnHeader {
   display: flex;
   align-items: center;
+  justify-content: center;
   padding: 0 5px;
+}
+
+.columnHeaderTitle {
+  font-size: 20px;
 }
 
 .columnDelete {
   width: 50px;
   border: none;
   font-size: 14px;
-}
-
-.columnBtnContainer {
-  display: flex;
-}
-
-.columnBtn {
-  width: 15px;
-  height: 20px;
-  font-size: 14px;
-  border: none;
-  margin-right: 5px;
-}
-
-.input {
-  width: 170px;
-  height: 20px;
-  margin: 0 5px;
 }
 
 .tasksContainer {

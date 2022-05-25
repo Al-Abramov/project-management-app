@@ -20,7 +20,7 @@ export async function getAllColumns(boardId: string) {
 
 export async function createColumns(boardId: string, obj: ColumnInterface) {
   const columnsURL = `${constURL.BOARDS}/${boardId}/${constURL.COLUMNS}`;
-  /*При создании колонки с уже существующим order - ошибка 500 */
+
   try {
     const response = await api.post(columnsURL, obj);
 

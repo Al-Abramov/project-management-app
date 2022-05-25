@@ -7,7 +7,7 @@
 .task {
   width: 100%;
   min-height: 20px;
-  background-color: aquamarine;
+  background-color: #fff;
   box-shadow: 1px 1px 1px #999;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -18,19 +18,14 @@
 
 .taskDelete {
   display: none;
-  //position: absolute;
   right: 5px;
   top: 5px;
-  //border: none;
+
   width: 20px;
   height: 25px;
-  //background-color: red;
-  //cursor: pointer;
-  //transition: display 0.5s linear;
 }
 
 .taskWrapper:hover .taskDelete{
   display: flex;
-  transition-duration: 0.5s
-  //transition: display 0.5s;
+  transition: 0.5s;
 }
