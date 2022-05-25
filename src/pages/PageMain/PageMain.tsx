@@ -37,30 +37,28 @@ const PageMain = () => {
   }, [getBoardsData]);
 
   return (
-    <main className={style.main}>
-      <div className={style.warapper}>
-        <TitlePageMain getModal={onOpen} />
-        <section className={style.boardsWrap}>
-          {data.map((board) => (
-            <Board
-              key={board.id}
-              id={board.id}
-              title={board.title}
-              description={board.description}
-              onOpen={onOpenConfirm}
-            />
-          ))}
-          <BoardModal onClose={onClose} isOpen={isOpen} />
-          <ConfirmDelBoardModal
-            onClose={onCloseConfirm}
-            isOpen={isOpenConfirm}
-            title="Удалить доску?"
-            action={() => deletePageMainBoard(idBoard)}
+    <div className={style.warapper}>
+      <TitlePageMain getModal={onOpen} />
+      <section className={style.boardsWrap}>
+        {data.map((board) => (
+          <Board
+            key={board.id}
+            id={board.id}
+            title={board.title}
+            description={board.description}
+            onOpen={onOpenConfirm}
           />
-          {isLoading && <LoadSpinner size={80} />}
-        </section>
-      </div>
-    </main>
+        ))}
+        <BoardModal onClose={onClose} isOpen={isOpen} />
+        <ConfirmDelBoardModal
+          onClose={onCloseConfirm}
+          isOpen={isOpenConfirm}
+          title="Удалить доску?"
+          action={() => deletePageMainBoard(idBoard)}
+        />
+        {isLoading && <LoadSpinner size={80} />}
+      </section>
+    </div>
   );
 };
 
