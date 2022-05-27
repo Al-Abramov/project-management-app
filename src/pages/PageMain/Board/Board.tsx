@@ -6,7 +6,6 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
 import React from 'react';
-import { fetchAllColumns } from '../../../store/boardSlice/boardSlice';
 
 interface BoardProps {
   id: string | undefined;
@@ -28,12 +27,16 @@ export const Board: React.FC<BoardProps> = (props) => {
     props.onOpen();
   };
 
-  const redirectBoard = async () => {
+  const setBoardId = () => {
     if (props.id) {
-      dispatch(fetchAllColumns(props.id));
+      localStorage.setItem('boardId', props.id);
       dispatch(setId(props.id));
     }
-    navigate('/board');
+  };
+
+  const redirectBoard = async () => {
+    setBoardId();
+    navigate(`/board/${props.id}`);
   };
 
   return (

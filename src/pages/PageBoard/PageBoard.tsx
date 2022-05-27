@@ -1,47 +1,77 @@
+import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { LoadSpinner } from '../../components/Spinner/Spinner';
+import { useModal } from '../../hooks/useModal';
+import { ConfirmModal } from '../../modals/ConfirmModal/ConfirmModal';
+import { COLUMN_MODAL, CONFIRM_COLUMN, CONFIRM_MODAL } from '../../modals/constModal';
+import { deleteColumn } from '../../services/columns/columns-service';
+import { TasksInterface } from '../../services/tasks/interface/tasks.interface';
+import { fetchBoardInfo } from '../../store/boardSlice/boardSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hook/hook';
+import { Column } from './Column/Column';
+import { ModalCreateColumn } from './Modals/ModalCreateColumn/ModalCreateColumn';
+import style from './PageBoard.module.scss';
+import { TitlePageBoard } from './Title/TitlePageBoard';
+
 const PageBoard = () => {
+  const dispatch = useAppDispatch();
+  const { id } = useParams();
+
+  const boardId = id as string;
+  const columnId = useAppSelector((state) => state.boardReducer.columnId) as string;
+
+  const columns = useAppSelector((state) => state.boardReducer.boardInfo.columns);
+  const isLoading = useAppSelector((state) => state.boardReducer.isLoading);
+
+  const [ColumnModal, onCloseColumn, onOpenColumn, isOpenColumn] = useModal(
+    COLUMN_MODAL,
+    ModalCreateColumn
+  );
+  const [ConfirmDelColumn, onCloseConfirm, onOpenConfirm, isOpenConfirm] = useModal(
+    CONFIRM_COLUMN,
+    ConfirmModal
+  );
+
+  const onDeleteColumn = async (idBoard: string, columnId: string) => {
+    await deleteColumn(idBoard, columnId);
+    getBoardInfo(boardId);
+  };
+
+  const getBoardInfo = React.useCallback(
+    async (boardId: string) => {
+      dispatch(fetchBoardInfo(boardId));
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    getBoardInfo(boardId);
+  }, [getBoardInfo, boardId]);
+
   return (
-    <div>
-      <h2>board</h2>
-      <ul>
-        <li>Должны присутствовать кнопки для создания колонки.</li>
-        <li>
-          Если к борде привязана хотябы одна колонка - отображаем также и кнопку создания таски.
-        </li>
-        <li>Для создания колонки и таска используется форма отображаемая в модальном окне.</li>
-        <li>Требования к модальному окну и формам описаны ранее.</li>
-        <li>Таск не может быть НЕ привязан к колонке.</li>
-        <li>
-          Мы можем создать несколько колонок. Мы можем создать неограниченное количество тасок. При
-          переполнении количеством тасок колонки - скролл внутри колонки.
-        </li>
-        <li>Страница на данном роуте не должна иметь скролла.</li>
-        <li>С помощью drag-n-drop мы можем менять колонки местами.</li>
-        <li>С помощью drag-n-drop мы можем менять очерёдность тасок в рамках колонки.</li>
-        <li>С помощью drag-n-drop мы можем менять принадлежность таски к колонке.</li>
-        <li>
-          Рекомендуется использовать существующую библиотеку из React-экосистемы для реализации
-          функционала drag-n-drop .
-        </li>
-        <li>
-          По клику на таск открываем модальное окно с формой edit task. Требования к форме и окну
-          как везде.
-        </li>
-        <li>
-          На таске должна присутствовать кнопка delete task. При нажатии: confirmation modal -&gt;
-          удаление.
-        </li>
-        <li>
-          Вверху колонки должен быть title. При нажатии на него он из текста должен превращаться в
-          input, слева от которого будут кнопки cancel и submit. После ввода текста в input и
-          нажатия submit - title колонки должен поменяться.
-        </li>
-        <li>
-          На колонке должна присутствовать кнопка delete. По нажатию - confirmation modal - при
-          апруве - удаление.
-        </li>
-        <li>Должна быть кнопка &quot;вернуться&quot; для возвращения к main route</li>
-        <li>ВНИМАНИЕ! Удаление колонки автоматически удаляет привязанные к ней таски из BD.</li>
-      </ul>
+    <div className={style.wrapper}>
+      <TitlePageBoard getModal={onOpenColumn} />
+      <section className={style.columnsContainer}>
+        {columns.map((column) => (
+          <Column
+            key={column.id}
+            title={column.title}
+            order={column.order as number}
+            boardId={boardId}
+            columnId={column.id as string}
+            onOpen={onOpenConfirm}
+            tasks={column.tasks as TasksInterface[]}
+          />
+        ))}
+        <ColumnModal onClose={onCloseColumn} isOpen={isOpenColumn} />
+        <ConfirmDelColumn
+          onClose={onCloseConfirm}
+          isOpen={isOpenConfirm}
+          title="Удалить колонку?"
+          action={() => onDeleteColumn(boardId, columnId)}
+        />
+      </section>
+      {isLoading && <LoadSpinner size={80} />}
     </div>
   );
 };

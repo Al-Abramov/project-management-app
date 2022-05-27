@@ -1,0 +1,26 @@
+.titleContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.logoContainer {
+  display: flex;
+}
+
+.title {
+  font-size: 32px;
+  margin: 0 20px;
+}
+
+.btnBack {
+  width: 150px;
+  height: 50px;
+  font-size: 14px;
+  border: none;
+}
+
+.createBtn {
+  width: 150px;
+  height: 50px;
+  border: none;
+}

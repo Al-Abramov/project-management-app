@@ -2,7 +2,7 @@ import axios from 'axios';
 import api from '../api';
 import { constURL } from '../enum.services';
 import { ErrorResponse } from '../types.services';
-import { TsaksInterface } from './interface/tasks.interface';
+import { TasksInterface } from './interface/tasks.interface';
 
 export async function getAllTasks(idBoard: string, idColumn: string) {
   const tasksUrl = `${constURL.BOARDS}/${idBoard}/${constURL.COLUMNS}/${idColumn}/tasks`;
@@ -18,7 +18,7 @@ export async function getAllTasks(idBoard: string, idColumn: string) {
   }
 }
 
-export async function createTasks(idBoard: string, idColumn: string, obj: TsaksInterface) {
+export async function createTasks(idBoard: string, idColumn: string, obj: TasksInterface) {
   const tasksUrl = `${constURL.BOARDS}/${idBoard}/${constURL.COLUMNS}/${idColumn}/${constURL.TASKS}`;
   try {
     const response = await api.post(tasksUrl, obj);
@@ -64,7 +64,7 @@ export async function updateTasks(
   idBoard: string,
   idColumn: string,
   idTasks: string,
-  obj: TsaksInterface
+  obj: TasksInterface
 ) {
   const tasksUrl = `${constURL.BOARDS}/${idBoard}/${constURL.COLUMNS}/${idColumn}/${constURL.TASKS}`;
   try {
