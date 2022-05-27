@@ -10,18 +10,24 @@ interface BoardInfoInterface {
 }
 
 interface BoardState {
-  id: string | null;
+  id: string;
+  columnId: string;
   boardInfo: BoardInfoInterface;
+  isLoading: boolean;
+  error: string;
 }
 
 const initialState: BoardState = {
-  id: null,
+  id: '',
+  columnId: '',
   boardInfo: {
     id: '',
     title: '',
     description: '',
     columns: [],
   },
+  isLoading: false,
+  error: '',
 };
 
 export const fetchBoardInfo = createAsyncThunk<
@@ -44,14 +50,37 @@ const boardSlice = createSlice({
     setId(state, action: PayloadAction<string>) {
       state.id = action.payload;
     },
+    setColumnId(state, action: PayloadAction<string>) {
+      state.columnId = action.payload;
+    },
+    deleteTaskFromState(state, action: PayloadAction<string>) {
+      state.boardInfo.columns.filter((column) => column.id === state.columnId)[0].tasks =
+        state.boardInfo.columns
+          .filter((column) => column.id === state.columnId)[0]
+          .tasks?.filter((task) => task.id !== action.payload);
+    },
+    resetBoardInfo(state) {
+      state.boardInfo = initialState.boardInfo;
+      state.boardInfo = {
+        id: '',
+        title: '',
+        description: '',
+        columns: [],
+      };
+    },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchBoardInfo.fulfilled, (state, action) => {
-      state.boardInfo = action.payload;
-    });
+    builder
+      .addCase(fetchBoardInfo.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchBoardInfo.fulfilled, (state, action) => {
+        state.boardInfo = action.payload;
+        state.isLoading = false;
+      });
   },
 });
 
-export const { setId } = boardSlice.actions;
+export const { setId, setColumnId, resetBoardInfo, deleteTaskFromState } = boardSlice.actions;
 
 export default boardSlice.reducer;

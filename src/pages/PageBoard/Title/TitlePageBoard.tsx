@@ -1,5 +1,7 @@
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
+import { resetBoardInfo } from '../../../store/boardSlice/boardSlice';
+import { useAppDispatch, useAppSelector } from '../../../store/hook/hook';
 import style from './TitlePageBoard.module.scss';
 
 interface TitlePageBoardProps {
@@ -7,10 +9,15 @@ interface TitlePageBoardProps {
 }
 
 export const TitlePageBoard: React.FC<TitlePageBoardProps> = (props) => {
+  const dispatch = useAppDispatch();
+
+  const titleBoard = useAppSelector((state) => state.boardReducer.boardInfo.title);
+
   const navigate = useNavigate();
 
   const getBack = () => {
     navigate(-1);
+    dispatch(resetBoardInfo());
   };
 
   const callModal = () => {
@@ -32,7 +39,7 @@ export const TitlePageBoard: React.FC<TitlePageBoardProps> = (props) => {
           Создать колонку
         </Button>
       </div>
-      <div className={style.title}>Title board</div>
+      <div className={style.title}>{titleBoard}</div>
       <div>
         <Button
           className={style.btnBack}

@@ -1,5 +1,7 @@
 .columnBtnContainer {
   display: flex;
+  
+  align-items: center;
 }
 
 .columnBtn {
@@ -10,8 +12,18 @@
   margin-right: 5px;
 }
 
+.form {
+  display: flex;
+}
+
 .input {
   width: 170px;
-  height: 20px;
+  height: 25px;
   margin: 0 5px;
+}
+
+.columnHeaderTitle {
+  font-size: 20px;
+  margin: 0;
+  cursor: pointer;
 }

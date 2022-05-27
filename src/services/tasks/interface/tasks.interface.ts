@@ -1,9 +1,12 @@
-export interface TsaksInterface {
+import { FileInterface } from '../../file/interfaces/file.interface';
+
+export interface TasksInterface {
+  id?: string;
   title: string;
-  done: boolean;
-  order: number;
+  order?: number;
   description: string;
   userId: string;
   boardId?: string;
   columnId?: string;
+  files?: FileInterface[];
 }

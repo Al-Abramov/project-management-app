@@ -4,34 +4,45 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import TextField from '@mui/material/TextField';
 import DialogActions from '@mui/material/DialogActions';
-import style from './ModalCreateColumn.module.scss';
+import style from './ModalCreateTask.module.scss';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../store/hook/hook';
 import { ModalProps } from '../../../../modals/interfaces/ModalsProps';
-import { CreateColumnForm } from './interfaces/CreateColumnForm';
-import { COLUMN_MODAL } from '../../../../modals/constModal';
+import { TASK_MODAL } from '../../../../modals/constModal';
 import { callModal } from '../../../../store/modalSlice/modalSlice';
-import { createColumns } from '../../../../services/columns/columns-service';
+import { TasksInterface } from '../../../../services/tasks/interface/tasks.interface';
+import { createTasks } from '../../../../services/tasks/tasks-service';
 import { fetchBoardInfo } from '../../../../store/boardSlice/boardSlice';
+import { useParams } from 'react-router-dom';
 
-export const ModalCreateColumn: React.FC<ModalProps> = (props) => {
+export interface CreateTaskForm {
+  title: string;
+  description: string;
+}
+
+export const ModalCreateTask: React.FC<ModalProps> = (props) => {
   const dispatch = useAppDispatch();
-  const boardId = useAppSelector((state) => state.boardReducer.id) as string;
+
+  const { id } = useParams();
+  const boardId = id as string;
+  const columnId = useAppSelector((state) => state.boardReducer.columnId) as string;
+  const userId = useAppSelector((state) => state.authReducer.id);
 
   const {
     register,
     formState: { errors, isValid },
     handleSubmit,
     reset,
-  } = useForm<CreateColumnForm>({
+  } = useForm<TasksInterface>({
     mode: 'onChange',
   });
 
-  const onSubmit: SubmitHandler<CreateColumnForm> = async (data) => {
-    dispatch(callModal({ name: COLUMN_MODAL, isOpen: false }));
-    await createColumns(boardId, data);
+  const onSubmit: SubmitHandler<CreateTaskForm> = async (data) => {
+    const objCreateTask = { ...data, userId };
+    await createTasks(boardId, columnId, objCreateTask);
     dispatch(fetchBoardInfo(boardId));
+    dispatch(callModal({ name: TASK_MODAL, isOpen: false }));
     reset();
   };
 
@@ -45,7 +56,7 @@ export const ModalCreateColumn: React.FC<ModalProps> = (props) => {
           fontWeight: '600',
         }}
       >
-        Создание колонки
+        Создание задачи
       </DialogTitle>
       <DialogContent>
         <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
@@ -60,6 +71,23 @@ export const ModalCreateColumn: React.FC<ModalProps> = (props) => {
               fullWidth
               multiline
               {...register('title', {
+                required: 'Required!',
+                validate: (value) => value.trim() != '',
+              })}
+            />
+            <div>{errors.title && <p className={style.error}>{errors.title.message}</p>}</div>
+          </div>
+          <div className={style.inputWrap}>
+            <TextField
+              sx={{
+                marginBottom: '30px',
+              }}
+              id="outlined-textarea"
+              label="Описание"
+              placeholder="Описание"
+              fullWidth
+              multiline
+              {...register('description', {
                 required: 'Required!',
                 validate: (value) => value.trim() != '',
               })}

@@ -1,7 +1,7 @@
 .column {
   height: 100%;
-  min-width: 200px;
-  //border: 1px solid #000;
+  min-width: 266px;
+  width: 266px;
   border-radius: 5px;
 }
 
@@ -17,12 +17,8 @@
 .columnHeader {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   padding: 0 5px;
-}
-
-.columnHeaderTitle {
-  font-size: 20px;
 }
 
 .columnDelete {

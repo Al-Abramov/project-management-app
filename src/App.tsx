@@ -52,7 +52,7 @@ function App() {
             }
           />
           <Route
-            path="board"
+            path="board/:id"
             element={
               <RequireAuth>
                 <PageBoard />

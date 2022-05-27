@@ -1,7 +1,7 @@
 import { Card } from '@mui/material';
 import style from './Board.module.scss';
 import { useAppDispatch } from '../../../store/hook/hook';
-import { fetchBoardInfo, setId } from '../../../store/boardSlice/boardSlice';
+import { setId } from '../../../store/boardSlice/boardSlice';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
@@ -27,12 +27,16 @@ export const Board: React.FC<BoardProps> = (props) => {
     props.onOpen();
   };
 
-  const redirectBoard = async () => {
+  const setBoardId = () => {
     if (props.id) {
-      dispatch(fetchBoardInfo(props.id));
+      localStorage.setItem('boardId', props.id);
       dispatch(setId(props.id));
     }
-    navigate('/board');
+  };
+
+  const redirectBoard = async () => {
+    setBoardId();
+    navigate(`/board/${props.id}`);
   };
 
   return (
