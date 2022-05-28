@@ -63,7 +63,7 @@ export const Board: React.FC<BoardProps> = (props) => {
         sx={{
           display: 'flex',
           alignSelf: 'flex-end',
-          marginTop: '25px',
+          //marginTop: '25px',
           fontSize: '14px',
         }}
         aria-label="delete"
