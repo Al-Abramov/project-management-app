@@ -14,6 +14,8 @@ import { TASK_MODAL } from '../../../modals/constModal';
 import { ModalCreateTask } from '../Modals/CreateTaskModal/ModalCreateTask';
 import { useModal } from '../../../hooks/useModal';
 import { ColumnTitle } from './ColumnHeader/ColumnTitle';
+import { useDrag } from 'react-dnd';
+import { ItemTypes } from '../ItemTypes';
 
 interface ColumnProps {
   title: string;
@@ -59,56 +61,65 @@ export const Column: React.FC<ColumnProps> = (props) => {
     getTasks(props.boardId, props.columnId);
   }, [getTasks, props.boardId, props.columnId]);*/
 
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: ItemTypes.CARD,
+    collect: (monitor) => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  }));
+
   return (
-    <Card sx={{ backgroundColor: '#C0C0C0' }} className={style.column} raised>
-      <div className={style.columnWrapper}>
-        <div className={style.columnHeader}>
-          {isInput ? (
-            <ColumnHeader
-              handleTitleClick={handleTitleClick}
-              value={title}
-              boardId={props.boardId}
-              columnId={props.columnId}
-              order={props.order}
-              changeTitle={changeTitle}
-            />
-          ) : (
-            <ColumnTitle title={title} handleTitleClick={handleTitleClick} />
-          )}
-          <div>
-            <IconButton sx={{ padding: '0' }} aria-label="delete" onClick={handleDeleteBtn}>
-              <DeleteIcon />
-            </IconButton>
+    <div ref={drag} className={style.column} style={{ opacity: isDragging ? 0 : 1 }}>
+      <Card sx={{ backgroundColor: '#C0C0C0' }} raised>
+        <div className={style.columnWrapper}>
+          <div className={style.columnHeader}>
+            {isInput ? (
+              <ColumnHeader
+                handleTitleClick={handleTitleClick}
+                value={title}
+                boardId={props.boardId}
+                columnId={props.columnId}
+                order={props.order}
+                changeTitle={changeTitle}
+              />
+            ) : (
+              <ColumnTitle title={title} handleTitleClick={handleTitleClick} />
+            )}
+            <div>
+              <IconButton sx={{ padding: '0' }} aria-label="delete" onClick={handleDeleteBtn}>
+                <DeleteIcon />
+              </IconButton>
+            </div>
+          </div>
+          <div className={style.tasksContainer}>
+            {props.tasks.map((task) => (
+              <Task
+                key={task.id}
+                title={task.title}
+                description={task.description}
+                order={task.order as number}
+                taskId={task.id as string}
+                boardId={props.boardId}
+                columnId={props.columnId}
+              />
+            ))}
+          </div>
+          <div className={style.taskBtnContainer}>
+            <Button
+              className={style.taskBtn}
+              sx={{
+                textTransform: 'none',
+                fontSize: '14px',
+              }}
+              variant="contained"
+              onClick={handleCreateTask}
+            >
+              Создать задачу
+            </Button>
           </div>
         </div>
-        <div className={style.tasksContainer}>
-          {props.tasks.map((task) => (
-            <Task
-              key={task.id}
-              title={task.title}
-              description={task.description}
-              order={task.order as number}
-              taskId={task.id as string}
-              boardId={props.boardId}
-              columnId={props.columnId}
-            />
-          ))}
-        </div>
-        <div className={style.taskBtnContainer}>
-          <Button
-            className={style.taskBtn}
-            sx={{
-              textTransform: 'none',
-              fontSize: '14px',
-            }}
-            variant="contained"
-            onClick={handleCreateTask}
-          >
-            Создать задачу
-          </Button>
-        </div>
-      </div>
-      <TaskModal onClose={onCloseTask} isOpen={isOpenTask} />
-    </Card>
+        <TaskModal onClose={onCloseTask} isOpen={isOpenTask} />
+      </Card>
+    </div>
   );
 };

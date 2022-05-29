@@ -13,10 +13,13 @@ import { ModalCreateColumn } from './Modals/ModalCreateColumn/ModalCreateColumn'
 import style from './PageBoard.module.scss';
 import { TitlePageBoard } from './Title/TitlePageBoard';
 
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+
 const PageBoard = () => {
   const dispatch = useAppDispatch();
   const { id } = useParams();
-
+  console.log('DndProvider: ', DndProvider);
   const boardId = id as string;
   const columnId = useAppSelector((state) => state.boardReducer.columnId) as string;
 
@@ -49,30 +52,32 @@ const PageBoard = () => {
   }, [getBoardInfo, boardId]);
 
   return (
-    <div className={style.wrapper}>
-      <TitlePageBoard getModal={onOpenColumn} />
-      <section className={style.columnsContainer}>
-        {columns.map((column) => (
-          <Column
-            key={column.id}
-            title={column.title}
-            order={column.order as number}
-            boardId={boardId}
-            columnId={column.id as string}
-            onOpen={onOpenConfirm}
-            tasks={column.tasks as TasksInterface[]}
+    <DndProvider backend={HTML5Backend}>
+      <div className={style.wrapper}>
+        <TitlePageBoard getModal={onOpenColumn} />
+        <section className={style.columnsContainer}>
+          {columns.map((column) => (
+            <Column
+              key={column.id}
+              title={column.title}
+              order={column.order as number}
+              boardId={boardId}
+              columnId={column.id as string}
+              onOpen={onOpenConfirm}
+              tasks={column.tasks as TasksInterface[]}
+            />
+          ))}
+          <ColumnModal onClose={onCloseColumn} isOpen={isOpenColumn} />
+          <ConfirmDelColumn
+            onClose={onCloseConfirm}
+            isOpen={isOpenConfirm}
+            title="Удалить колонку?"
+            action={() => onDeleteColumn(boardId, columnId)}
           />
-        ))}
-        <ColumnModal onClose={onCloseColumn} isOpen={isOpenColumn} />
-        <ConfirmDelColumn
-          onClose={onCloseConfirm}
-          isOpen={isOpenConfirm}
-          title="Удалить колонку?"
-          action={() => onDeleteColumn(boardId, columnId)}
-        />
-      </section>
-      {isLoading && <LoadSpinner size={80} />}
-    </div>
+        </section>
+        {isLoading && <LoadSpinner size={80} />}
+      </div>
+    </DndProvider>
   );
 };
 
