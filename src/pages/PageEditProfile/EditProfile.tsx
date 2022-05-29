@@ -8,6 +8,9 @@ import { deleteProfile, getProfile, updateProfile } from '../../store/userSlice/
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LoadSpinner } from '../../components/Spinner/Spinner';
+import { useModal } from '../../hooks/useModal';
+import { ConfirmModal } from '../../modals/ConfirmModal/ConfirmModal';
+import { CONFIRM_MODAL } from '../../modals/constModal';
 
 const EditProfile = () => {
   const navigation = useNavigate();
@@ -17,6 +20,8 @@ const EditProfile = () => {
   const [isErrorAPI, setIsErrorAPI] = useState(false);
 
   const dispatch = useAppDispatch();
+
+  const [ConfirmModalDelete, onClose, onOpen, isOpen] = useModal(CONFIRM_MODAL, ConfirmModal);
 
   const {
     register,
@@ -46,8 +51,7 @@ const EditProfile = () => {
   const handleDeleteUser = async () => {
     try {
       setIsLoading(true);
-      const deleteUser = await dispatch(deleteProfile()).unwrap();
-      console.log('handleDeleteUser', deleteUser);
+      await dispatch(deleteProfile()).unwrap();
 
       navigation('/', { replace: true });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -111,7 +115,7 @@ const EditProfile = () => {
             type="text"
             variant="standard"
             {...register('name', {
-              required: `reqeired field`,
+              required: `required field`,
               minLength: { value: 3, message: 'minimum 3 chair' },
               pattern: {
                 value: /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/g,
@@ -129,7 +133,7 @@ const EditProfile = () => {
           <TextField
             variant="standard"
             type="text"
-            {...register('login', { required: `reqeired field` })}
+            {...register('login', { required: `required field` })}
             id="login"
             error={!!errors?.login}
           />
@@ -149,11 +153,11 @@ const EditProfile = () => {
 
         <Box className={styles.form__controls}>
           <Button variant="contained" type="submit" disabled={isSubmitting}>
-            Submit
+            Изменить
           </Button>
 
-          <Button variant="outlined" color="error" onClick={handleDeleteUser}>
-            Удалить user
+          <Button variant="outlined" color="error" onClick={onOpen}>
+            Удалить профиль
           </Button>
         </Box>
 
@@ -163,6 +167,12 @@ const EditProfile = () => {
           </Alert>
         )}
       </form>
+      <ConfirmModalDelete
+        onClose={onClose}
+        isOpen={isOpen}
+        title="Удалить профиль?"
+        action={() => handleDeleteUser()}
+      />
     </Container>
   );
 };
