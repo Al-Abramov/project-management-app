@@ -36,11 +36,6 @@ export const Column: React.FC<ColumnProps> = (props) => {
     setIsInut(isInput ? false : true);
   };
 
-  /*const getTasks = React.useCallback(async (boardId: string, columnId: string) => {
-    const data = await getAllTasks(boardId, columnId);
-    setTasks(data);
-  }, []);*/
-
   const handleDeleteBtn = () => {
     dispatch(setColumnId(props.columnId));
     props.onOpen();
@@ -55,9 +50,20 @@ export const Column: React.FC<ColumnProps> = (props) => {
     setTitle(newTitle);
   };
 
-  /*useEffect(() => {
-    getTasks(props.boardId, props.columnId);
-  }, [getTasks, props.boardId, props.columnId]);*/
+  const sortingTasks = () => {
+    const sortTask = [...props.tasks].sort((a, b) => (a.order as number) - (b.order as number));
+    return sortTask.map((task) => (
+      <Task
+        key={task.id}
+        title={task.title}
+        description={task.description}
+        order={task.order as number}
+        taskId={task.id as string}
+        boardId={props.boardId}
+        columnId={props.columnId}
+      />
+    ));
+  };
 
   return (
     <Card sx={{ backgroundColor: '#C0C0C0' }} className={style.column} raised>
@@ -81,19 +87,7 @@ export const Column: React.FC<ColumnProps> = (props) => {
             </IconButton>
           </div>
         </div>
-        <div className={style.tasksContainer}>
-          {props.tasks.map((task) => (
-            <Task
-              key={task.id}
-              title={task.title}
-              description={task.description}
-              order={task.order as number}
-              taskId={task.id as string}
-              boardId={props.boardId}
-              columnId={props.columnId}
-            />
-          ))}
-        </div>
+        <div className={style.tasksContainer}>{sortingTasks()}</div>
         <div className={style.taskBtnContainer}>
           <Button
             className={style.taskBtn}
