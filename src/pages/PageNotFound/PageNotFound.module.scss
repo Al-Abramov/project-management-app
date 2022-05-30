@@ -1,0 +1,19 @@
+.notFound {
+  flex: 1 1 auto;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 72px;
+  text-transform: uppercase;
+}
+
+.big {
+  font-size: 150px;
+  font-weight: 600;
+}
