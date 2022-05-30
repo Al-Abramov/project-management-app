@@ -7,8 +7,7 @@ import style from './Column.module.scss';
 import { ColumnHeader } from './ColumnHeader/ColumnHeader';
 import { setColumnId } from '../../../store/boardSlice/boardSlice';
 import { useAppDispatch } from '../../../store/hook/hook';
-import { getAllTasks } from '../../../services/tasks/tasks-service';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { TasksInterface } from '../../../services/tasks/interface/tasks.interface';
 import { TASK_MODAL } from '../../../modals/constModal';
 import { ModalCreateTask } from '../Modals/CreateTaskModal/ModalCreateTask';
@@ -26,14 +25,17 @@ interface ColumnProps {
 
 export const Column: React.FC<ColumnProps> = (props) => {
   const [title, setTitle] = useState(props.title);
-  const [isInput, setIsInut] = useState(false);
+  const [isInput, setIsInput] = useState(false);
 
   const dispatch = useAppDispatch();
 
-  const [TaskModal, onCloseTask, onOpenTask, isOpenTask] = useModal(TASK_MODAL, ModalCreateTask);
+  const [TaskModal, onCloseTask, onOpenTask, isOpenTask] = useModal(
+    TASK_MODAL + props.columnId,
+    ModalCreateTask
+  );
 
   const handleTitleClick = () => {
-    setIsInut(isInput ? false : true);
+    setIsInput(isInput ? false : true);
   };
 
   const handleDeleteBtn = () => {

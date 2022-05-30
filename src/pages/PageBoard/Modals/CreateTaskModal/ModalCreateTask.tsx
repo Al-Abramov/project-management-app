@@ -42,7 +42,7 @@ export const ModalCreateTask: React.FC<ModalProps> = (props) => {
     const objCreateTask = { ...data, userId };
     await createTasks(boardId, columnId, objCreateTask);
     dispatch(fetchBoardInfo(boardId));
-    dispatch(callModal({ name: TASK_MODAL, isOpen: false }));
+    dispatch(callModal({ name: TASK_MODAL + columnId, isOpen: false }));
     reset();
   };
 
