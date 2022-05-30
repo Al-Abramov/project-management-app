@@ -115,7 +115,7 @@ const authSlice = createSlice({
 
       .addCase(deleteProfile.fulfilled, (state) => {
         localStorage.removeItem('token');
-
+        localStorage.removeItem('name');
         state.id = '';
         state.login = '';
         state.name = '';
