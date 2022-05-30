@@ -90,7 +90,6 @@ const EditProfile = () => {
   }, [dispatch, reset]);
 
   useEffect(() => {
-    console.log(`useEffect first`);
     loadUser();
   }, [loadUser]);
 

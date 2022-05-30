@@ -43,10 +43,6 @@ export const login = createAsyncThunk<string, AccountIntrface, { rejectValue: st
   }
 );
 
-export const logout = createAsyncThunk('user/logout', async () => {
-  return await localStorage.removeItem('token');
-});
-
 export const updateProfile = createAsyncThunk<UserState, AccountIntrface, { state: RootState }>(
   'user/updateProfile',
   async (data, { getState }) => {
@@ -89,7 +85,14 @@ const initialState: UserState = {
 const authSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    logout(state) {
+      localStorage.removeItem('token');
+      state.id = '';
+      state.name = '';
+      state.login = '';
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(login.fulfilled, (state, action) => {
@@ -119,5 +122,7 @@ const authSlice = createSlice({
       });
   },
 });
+
+export const { logout } = authSlice.actions;
 
 export default authSlice.reducer;

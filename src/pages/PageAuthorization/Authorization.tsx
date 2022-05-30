@@ -63,7 +63,7 @@ const Authorization = () => {
             {...register('login', { required: `reqeired field` })}
             id="login"
             error={!!errors?.login}
-            defaultValue={`user001`}
+            defaultValue={``}
           />
           <div className={styles.form__feedback}>{errors.login?.message}</div>
         </Box>
@@ -75,7 +75,7 @@ const Authorization = () => {
             {...register('password', { required: true })}
             id="password"
             error={!!errors?.password}
-            defaultValue={`userpass@123`}
+            defaultValue={``}
           />
 
           <div className={styles.form__feedback}>{errors.password?.message}</div>
