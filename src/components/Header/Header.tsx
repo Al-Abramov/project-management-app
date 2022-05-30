@@ -15,7 +15,7 @@ const Header = () => {
     reducer(logout());
     navigation('/');
   };
-  // const [logging, setLogging] = useState(true);
+
   const [sticky, setSticky] = useState(false);
   const isLog = useAppSelector((state) => state.authReducer.id);
   const nameProfile = useAppSelector((state) => state.authReducer.name);
@@ -44,7 +44,7 @@ const Header = () => {
             <Nav className="me-auto">
               {isLog && (
                 <Nav.Link as={NavLink} to="main">
-                  Create new board
+                  Создать новую доску
                 </Nav.Link>
               )}
             </Nav>
@@ -53,21 +53,21 @@ const Header = () => {
               <Nav>
                 <NavDropdown menuVariant="light" title={nameProfile} id="nav-dropdown">
                   <NavDropdown.Item to={'edit-profile'} as={Link}>
-                    Edit Profile
+                    Профиль
                   </NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item to={'/'} onClick={logoutHandle} as={Link}>
-                    Sign out
+                    Выйти
                   </NavDropdown.Item>
                 </NavDropdown>
               </Nav>
             ) : (
               <Nav className="gap-2">
                 <Nav.Link as={NavLink} to="authorization">
-                  Sign In
+                  Войти
                 </Nav.Link>
                 <Nav.Link as={NavLink} to="registration">
-                  Sign Up
+                  Зарегистрироваться
                 </Nav.Link>
               </Nav>
             )}

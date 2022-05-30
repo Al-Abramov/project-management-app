@@ -98,7 +98,6 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(login.fulfilled, (state, action) => {
-        //const { id, login } = decodeToken(action.payload);
         state.id = action.payload.id;
         state.login = action.payload.login;
         state.name = action.payload.name;
