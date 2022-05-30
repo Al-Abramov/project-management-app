@@ -19,6 +19,7 @@ const Header = () => {
   // const [logging, setLogging] = useState(true);
   const [sticky, setSticky] = useState(false);
   const isLog = useAppSelector((state) => state.authReducer.id);
+  const nameProfile = useAppSelector((state) => state.authReducer.name);
   console.log(isLog);
   const changeColor = () => {
     window.scrollY >= 40 ? setSticky(true) : setSticky(false);
@@ -52,10 +53,14 @@ const Header = () => {
             <Form.Check type="switch" id="custom-switch" className="py-2" label="" />
             {isLog ? (
               <Nav>
-                <NavDropdown menuVariant="light" title={'profileName'} id="nav-dropdown">
-                  <NavDropdown.Item href="#action1">settings</NavDropdown.Item>
+                <NavDropdown menuVariant="light" title={nameProfile} id="nav-dropdown">
+                  <NavDropdown.Item to={'edit-profile'} as={Link}>
+                    Edit Profile
+                  </NavDropdown.Item>
                   <NavDropdown.Divider />
-                  <NavDropdown.Item href="#action1">Sign out</NavDropdown.Item>
+                  <NavDropdown.Item to={'/'} onClick={logoutHandle} as={Link}>
+                    Sign out
+                  </NavDropdown.Item>
                 </NavDropdown>
               </Nav>
             ) : (
