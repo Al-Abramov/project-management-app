@@ -44,6 +44,22 @@ const PageBoard = () => {
     [dispatch]
   );
 
+  const sortingColumns = () => {
+    const sortColumns = [...columns].sort((a, b) => (a.order as number) - (b.order as number));
+
+    return sortColumns.map((column) => (
+      <Column
+        key={column.id}
+        title={column.title}
+        order={column.order as number}
+        boardId={boardId}
+        columnId={column.id as string}
+        onOpen={onOpenConfirm}
+        tasks={column.tasks as TasksInterface[]}
+      />
+    ));
+  };
+
   useEffect(() => {
     getBoardInfo(boardId);
   }, [getBoardInfo, boardId]);
@@ -52,17 +68,7 @@ const PageBoard = () => {
     <div className={style.wrapper}>
       <TitlePageBoard getModal={onOpenColumn} />
       <section className={style.columnsContainer}>
-        {columns.map((column) => (
-          <Column
-            key={column.id}
-            title={column.title}
-            order={column.order as number}
-            boardId={boardId}
-            columnId={column.id as string}
-            onOpen={onOpenConfirm}
-            tasks={column.tasks as TasksInterface[]}
-          />
-        ))}
+        {sortingColumns()}
         <ColumnModal onClose={onCloseColumn} isOpen={isOpenColumn} />
         <ConfirmDelColumn
           onClose={onCloseConfirm}

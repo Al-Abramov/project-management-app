@@ -7,8 +7,7 @@ import style from './Column.module.scss';
 import { ColumnHeader } from './ColumnHeader/ColumnHeader';
 import { setColumnId } from '../../../store/boardSlice/boardSlice';
 import { useAppDispatch } from '../../../store/hook/hook';
-import { getAllTasks } from '../../../services/tasks/tasks-service';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { TasksInterface } from '../../../services/tasks/interface/tasks.interface';
 import { TASK_MODAL } from '../../../modals/constModal';
 import { ModalCreateTask } from '../Modals/CreateTaskModal/ModalCreateTask';
@@ -26,20 +25,18 @@ interface ColumnProps {
 
 export const Column: React.FC<ColumnProps> = (props) => {
   const [title, setTitle] = useState(props.title);
-  const [isInput, setIsInut] = useState(false);
+  const [isInput, setIsInput] = useState(false);
 
   const dispatch = useAppDispatch();
 
-  const [TaskModal, onCloseTask, onOpenTask, isOpenTask] = useModal(TASK_MODAL, ModalCreateTask);
+  const [TaskModal, onCloseTask, onOpenTask, isOpenTask] = useModal(
+    TASK_MODAL + props.columnId,
+    ModalCreateTask
+  );
 
   const handleTitleClick = () => {
-    setIsInut(isInput ? false : true);
+    setIsInput(isInput ? false : true);
   };
-
-  /*const getTasks = React.useCallback(async (boardId: string, columnId: string) => {
-    const data = await getAllTasks(boardId, columnId);
-    setTasks(data);
-  }, []);*/
 
   const handleDeleteBtn = () => {
     dispatch(setColumnId(props.columnId));
@@ -55,9 +52,20 @@ export const Column: React.FC<ColumnProps> = (props) => {
     setTitle(newTitle);
   };
 
-  /*useEffect(() => {
-    getTasks(props.boardId, props.columnId);
-  }, [getTasks, props.boardId, props.columnId]);*/
+  const sortingTasks = () => {
+    const sortTask = [...props.tasks].sort((a, b) => (a.order as number) - (b.order as number));
+    return sortTask.map((task) => (
+      <Task
+        key={task.id}
+        title={task.title}
+        description={task.description}
+        order={task.order as number}
+        taskId={task.id as string}
+        boardId={props.boardId}
+        columnId={props.columnId}
+      />
+    ));
+  };
 
   return (
     <Card sx={{ backgroundColor: '#C0C0C0' }} className={style.column} raised>
@@ -81,19 +89,7 @@ export const Column: React.FC<ColumnProps> = (props) => {
             </IconButton>
           </div>
         </div>
-        <div className={style.tasksContainer}>
-          {props.tasks.map((task) => (
-            <Task
-              key={task.id}
-              title={task.title}
-              description={task.description}
-              order={task.order as number}
-              taskId={task.id as string}
-              boardId={props.boardId}
-              columnId={props.columnId}
-            />
-          ))}
-        </div>
+        <div className={style.tasksContainer}>{sortingTasks()}</div>
         <div className={style.taskBtnContainer}>
           <Button
             className={style.taskBtn}

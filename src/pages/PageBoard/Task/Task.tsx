@@ -1,7 +1,7 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import { TextareaAutosize } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useModal } from '../../../hooks/useModal';
 import { ConfirmModal } from '../../../modals/ConfirmModal/ConfirmModal';
 import { CONFIRM_TASK } from '../../../modals/constModal';
@@ -20,6 +20,8 @@ interface TaskProps {
 }
 
 export const Task: React.FC<TaskProps> = (props) => {
+  const [updateMessage, setUpdateMessage] = useState(false);
+
   const titleRef: React.RefObject<HTMLTextAreaElement> = useRef(null);
   const descrRef: React.RefObject<HTMLTextAreaElement> = useRef(null);
 
@@ -52,13 +54,15 @@ export const Task: React.FC<TaskProps> = (props) => {
       boardId: props.boardId,
       columnId: props.columnId,
     };
-
+    setUpdateMessage(true);
+    setTimeout(() => setUpdateMessage(false), 1500);
     await updateTasks(props.boardId, props.columnId, props.taskId, obj);
   };
 
   return (
     <div className={style.taskWrapper}>
       <div className={style.task}>
+        {updateMessage && <div className={style.updateMess}>&#10003; Обновлено</div>}
         <TextareaAutosize
           ref={titleRef}
           className={style.taskTitle}
