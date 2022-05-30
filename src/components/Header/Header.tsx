@@ -16,7 +16,7 @@ const Header = () => {
     reducer(logout());
     navigation('/');
   };
-  const [logging, setLogging] = useState(true);
+  // const [logging, setLogging] = useState(true);
   const [sticky, setSticky] = useState(false);
   const isLog = useAppSelector((state) => state.authReducer.id);
   console.log(isLog);
