@@ -36,8 +36,11 @@ export const login = createAsyncThunk<UserState, AccountIntrface, { rejectValue:
     try {
       const token: string = await createToken(user);
       localStorage.setItem('token', token);
+
       const { id } = decodeToken(token);
       const dataUser = await getUserById(id);
+
+      localStorage.setItem('name', dataUser.name);
       return dataUser;
     } catch (err) {
       return rejectWithValue(err as string);
@@ -90,6 +93,7 @@ const authSlice = createSlice({
   reducers: {
     logout(state) {
       localStorage.removeItem('token');
+      localStorage.removeItem('name');
       state.id = '';
       state.name = '';
       state.login = '';
@@ -100,7 +104,7 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.id = action.payload.id;
         state.login = action.payload.login;
-        state.name = action.payload.name;
+        state.name = localStorage.getItem('name') as string;
       })
 
       .addCase(getProfile.fulfilled, (state, action) => {

@@ -18,7 +18,7 @@ const Header = () => {
 
   const [sticky, setSticky] = useState(false);
   const isLog = useAppSelector((state) => state.authReducer.id);
-  const nameProfile = useAppSelector((state) => state.authReducer.name);
+  const nameProfile = localStorage.getItem('name'); //useAppSelector((state) => state.authReducer.name);
 
   const changeColor = () => {
     window.scrollY >= 40 ? setSticky(true) : setSticky(false);
