@@ -8,7 +8,6 @@ import { logout } from '../../store/userSlice/userSlice';
 
 const Header = () => {
   const navigation = useNavigate();
-  const token = localStorage.getItem('token');
 
   const reducer = useAppDispatch();
 
@@ -20,7 +19,7 @@ const Header = () => {
   const [sticky, setSticky] = useState(false);
   const isLog = useAppSelector((state) => state.authReducer.id);
   const nameProfile = useAppSelector((state) => state.authReducer.name);
-  console.log(isLog);
+
   const changeColor = () => {
     window.scrollY >= 40 ? setSticky(true) : setSticky(false);
   };
@@ -43,12 +42,11 @@ const Header = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link as={NavLink} to="main">
-                Main
-              </Nav.Link>
-              <Nav.Link as={NavLink} to="board">
-                Create new board
-              </Nav.Link>
+              {isLog && (
+                <Nav.Link as={NavLink} to="main">
+                  Create new board
+                </Nav.Link>
+              )}
             </Nav>
             <Form.Check type="switch" id="custom-switch" className="py-2" label="" />
             {isLog ? (

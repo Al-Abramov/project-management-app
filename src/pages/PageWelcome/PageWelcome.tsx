@@ -1,6 +1,5 @@
-import { Link } from 'react-router-dom';
 import './PageWelcome.scss';
-import { Button, Container } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 
 const PageWelcome = () => {
   return (
@@ -8,36 +7,45 @@ const PageWelcome = () => {
       <Container>
         <div className="welcome__wrapper">
           <div className="welcome__content">
-            <h1 className="welcome__title"> Project management app </h1>
-            <span className="welcome__subtitle mt-3">Log in or register to get started</span>
-            <div className="welcome__buttons d-flex gap-2 mt-3">
-              <Button
-                href="authorization"
-                variant="outline-primary"
-                size="lg"
-                className="px-5 welcome__btn-light"
-              >
-                <Link to={'authorization'} className={'btn-light__link'}>
-                  log in
-                </Link>
-              </Button>
-              <Button variant="primary" size="lg" className="px-5">
-                <Link to={'registration'} className={'welcome__btn'}>
-                  sign up
-                </Link>
-              </Button>
-            </div>
+            <h1 className="welcome__title">
+              <span>Welcome page</span>
+              <span>Project management app</span>
+            </h1>
           </div>
           <div className="welcome__about">
             <div className="welcome__about-descr">
-              Приложение помогает достичь поставленные задачи отдельному человеку в команде или
-              группе разработчиков.
+              <p>
+                Приложение помогает достичь поставленные задачи отдельному человеку в команде или
+                группе разработчиков.
+              </p>
             </div>
             <div className="welcome__about-course">
-              Приложение выполнено в рамках курса ReactJS rolling scopes school
+              <p>
+                Приложение выполнено в рамках курса <b>ReactJS rolling scopes school</b>
+              </p>
             </div>
             <div className="welcome__about-team">
-              Над приложением работали: Alexey Abramov, Max Tyshkevich, Anton Volkov
+              <p className="welcome__about-team--text">Команда проекта:</p>
+              <div className="welcome__container">
+                <div className="item">
+                  <div className="avatar"></div>
+                  <a href="https://github.com/Al-Abramov" target="_blank" rel="noreferrer">
+                    Алексей
+                  </a>
+                </div>
+                <div className="item">
+                  <div className="avatar"></div>
+                  <a href="https://github.com/MaxTyshkevich" target="_blank" rel="noreferrer">
+                    Максим
+                  </a>
+                </div>
+                <div className="item">
+                  <div className="avatar"></div>
+                  <a href="https://github.com/KotoJeep" target="_blank" rel="noreferrer">
+                    Антон
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>

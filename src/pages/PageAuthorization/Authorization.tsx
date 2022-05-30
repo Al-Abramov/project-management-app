@@ -30,10 +30,8 @@ const Authorization = () => {
       setIsLoading(true);
       await dispatch(login(data)).unwrap();
       navigation('/main', { replace: true });
-
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (errorMessage: any) {
-      setMessage(errorMessage);
+    } catch (errorMessage) {
+      setMessage(errorMessage as string);
     } finally {
       setIsLoading(false);
       reset();

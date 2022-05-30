@@ -39,10 +39,9 @@ const EditProfile = () => {
 
       setIsErrorAPI(false);
       setMessage('Данные сохранены');
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (errorMessage: any) {
+    } catch (errorMessage) {
       setIsErrorAPI(true);
-      setMessage(errorMessage);
+      setMessage(errorMessage as string);
     } finally {
       setIsLoading(false);
     }
@@ -54,13 +53,12 @@ const EditProfile = () => {
       await dispatch(deleteProfile()).unwrap();
 
       navigation('/', { replace: true });
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
+    } catch (error) {
       if (error instanceof Error) {
         setMessage(error.message);
         return;
       }
-      setMessage(error);
+      setMessage(error as string);
     } finally {
       setIsLoading(false);
     }
@@ -75,15 +73,13 @@ const EditProfile = () => {
         name: result.name,
         login: result.login,
       });
-
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
+    } catch (error) {
       setIsErrorAPI(true);
       if (error instanceof Error) {
         setMessage(error.message);
         return;
       }
-      setMessage(error);
+      setMessage(error as string);
     } finally {
       setIsLoading(false);
     }

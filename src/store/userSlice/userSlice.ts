@@ -30,13 +30,15 @@ export const registerUser = createAsyncThunk<UserState, AccountIntrface, { rejec
   }
 );
 
-export const login = createAsyncThunk<string, AccountIntrface, { rejectValue: string }>(
+export const login = createAsyncThunk<UserState, AccountIntrface, { rejectValue: string }>(
   'user/login',
   async (user, { rejectWithValue }) => {
     try {
       const token: string = await createToken(user);
       localStorage.setItem('token', token);
-      return token;
+      const { id } = decodeToken(token);
+      const dataUser = await getUserById(id);
+      return dataUser;
     } catch (err) {
       return rejectWithValue(err as string);
     }
@@ -96,9 +98,10 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(login.fulfilled, (state, action) => {
-        const { id, login } = decodeToken(action.payload);
-        state.id = id;
-        state.login = login;
+        //const { id, login } = decodeToken(action.payload);
+        state.id = action.payload.id;
+        state.login = action.payload.login;
+        state.name = action.payload.name;
       })
 
       .addCase(getProfile.fulfilled, (state, action) => {
