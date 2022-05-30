@@ -3,7 +3,7 @@ import { Container, Navbar, Nav, Form, NavDropdown } from 'react-bootstrap';
 import { useState } from 'react';
 import logo from '../../assets/icons/trello-mark.svg';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../../store/hook/hook';
+import { useAppDispatch, useAppSelector } from '../../store/hook/hook';
 import { logout } from '../../store/userSlice/userSlice';
 
 const Header = () => {
@@ -18,7 +18,8 @@ const Header = () => {
   };
   const [logging, setLogging] = useState(true);
   const [sticky, setSticky] = useState(false);
-  //useappselector
+  const isLog = useAppSelector((state) => state.authReducer.id);
+  console.log(isLog);
   const changeColor = () => {
     window.scrollY >= 40 ? setSticky(true) : setSticky(false);
   };
@@ -49,7 +50,7 @@ const Header = () => {
               </Nav.Link>
             </Nav>
             <Form.Check type="switch" id="custom-switch" className="py-2" label="" />
-            {logging ? (
+            {isLog ? (
               <Nav>
                 <NavDropdown menuVariant="light" title={'profileName'} id="nav-dropdown">
                   <NavDropdown.Item href="#action1">settings</NavDropdown.Item>
