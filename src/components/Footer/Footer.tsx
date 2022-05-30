@@ -5,7 +5,7 @@ import { Container, Navbar, Nav } from 'react-bootstrap';
 const Footer = () => {
   return (
     <footer>
-      <Navbar bg="dark" variant="dark">
+      <Navbar bg="primary" variant="dark">
         <Container className="flex-column flex-md-row align-items-center align-content-center justify-content-center flex-wrap">
           <Navbar.Brand href="https://rs.school/react/">
             <img
