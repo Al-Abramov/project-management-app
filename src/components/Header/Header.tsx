@@ -1,10 +1,8 @@
-import styles from './Header.module.scss';
 import './Header.scss';
-import { Container, Navbar, Nav, Button, Form, NavDropdown } from 'react-bootstrap';
+import { Container, Navbar, Nav, Form, NavDropdown } from 'react-bootstrap';
 import { useState } from 'react';
 import logo from '../../assets/icons/trello-mark.svg';
-
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../store/hook/hook';
 import { logout } from '../../store/userSlice/userSlice';
 
@@ -20,7 +18,7 @@ const Header = () => {
   };
   const [logging, setLogging] = useState(true);
   const [sticky, setSticky] = useState(false);
-
+  //useappselector
   const changeColor = () => {
     window.scrollY >= 40 ? setSticky(true) : setSticky(false);
   };
@@ -28,9 +26,9 @@ const Header = () => {
 
   return (
     <header className="header-sticky">
-      <Navbar expand="lg" bg={sticky ? 'light' : 'dark'} variant={sticky ? 'light' : 'dark'}>
+      <Navbar expand="lg" bg={sticky ? 'light' : 'primary'} variant={sticky ? 'light' : 'dark'}>
         <Container>
-          <Navbar.Brand href="/">
+          <Navbar.Brand to="/" as={Link}>
             <img
               src={logo}
               width="25"
@@ -52,11 +50,13 @@ const Header = () => {
             </Nav>
             <Form.Check type="switch" id="custom-switch" className="py-2" label="" />
             {logging ? (
-              <NavDropdown menuVariant="dark" title={'profileName'} id="nav-dropdown-dark-example">
-                <NavDropdown.Item href="#action1">settings</NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#action1">Sign out</NavDropdown.Item>
-              </NavDropdown>
+              <Nav>
+                <NavDropdown menuVariant="light" title={'profileName'} id="nav-dropdown">
+                  <NavDropdown.Item href="#action1">settings</NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item href="#action1">Sign out</NavDropdown.Item>
+                </NavDropdown>
+              </Nav>
             ) : (
               <Nav className="gap-2">
                 <Nav.Link as={NavLink} to="authorization">
