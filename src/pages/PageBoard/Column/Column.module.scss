@@ -1,0 +1,48 @@
+.column {
+  height: 100%;
+  min-width: 266px;
+  width: 266px;
+  border-radius: 5px;
+}
+
+.column:not(:last-child) {
+  margin-right: 20px;
+}
+
+.columnWrapper {
+  width: 100%;
+  padding: 10px 5px;
+}
+
+.columnHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5px;
+}
+
+.columnDelete {
+  width: 50px;
+  border: none;
+  font-size: 14px;
+}
+
+.tasksContainer {
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin-top: 10px;
+  min-height: 0;
+  max-height: 540px;
+  padding: 0 5px;
+}
+
+.taskBtn {
+  border: none;
+  margin-right: 17px;
+}
+
+.taskBtnContainer {
+  display: flex;
+  justify-content: center;
+}

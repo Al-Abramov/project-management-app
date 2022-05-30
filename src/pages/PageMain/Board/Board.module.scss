@@ -1,0 +1,35 @@
+.board {
+  width: 300px;
+  height: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: aquamarine;
+  line-height: 1;
+  margin-bottom: 20px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.titleBoard {
+  width: 100%;
+  overflow-wrap: break-word;
+  overflow: hidden;
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.descrBoard {
+  width: 100%;
+  overflow-wrap: break-word;
+  overflow: hidden;
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+.delete {
+  display: flex;
+  align-self: end;
+  border: 0;
+}

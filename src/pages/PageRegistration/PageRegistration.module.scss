@@ -1,0 +1,35 @@
+.container {
+  flex: 1;
+}
+
+.form {
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  row-gap: 40px;
+
+  &__title {
+    font-size: 30px;
+    align-self: center;
+  }
+
+  &__element {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  &__label {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  &__feedback {
+    position: absolute;
+    bottom: -25px;
+    left: 0;
+    color: red;
+  }
+}
